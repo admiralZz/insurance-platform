@@ -1,0 +1,5 @@
+rootProject.name = 'insurance-platform'
+include 'calculator'
+include 'domain'
+include 'platform'
+

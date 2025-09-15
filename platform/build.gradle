@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.5'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id "io.freefair.lombok" version "8.4"
+}
+
+group = 'ru.virtusystems'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+apply from: "${rootDir}/versions.gradle"
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${versions.springdoc}"
+    implementation 'org.liquibase:liquibase-core'
+
+    // Excel
+    implementation "org.apache.poi:poi:${versions.apache_poi}"
+    implementation "org.apache.poi:poi-ooxml:${versions.apache_poi}"
+
+    // MapStruct
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+    // Совместимость MapStruct с Lombok
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${versions.mapstruct_lombok_binding}"
+
+    runtimeOnly 'org.postgresql:postgresql'
+
+    testImplementation "org.testcontainers:postgresql:${versions.testcontainers}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+test {
+    useJUnitPlatform()
+}
