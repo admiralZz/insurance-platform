@@ -1,23 +1,18 @@
 package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.api.request.DmsCalculateRequest;
-import ru.virtusystems.api.request.IssueRequest;
-import ru.virtusystems.api.request.SaveRequest;
-import ru.virtusystems.api.request.UpdateRequest;
-import ru.virtusystems.api.response.ContractResponse;
-import ru.virtusystems.database.model.Contract;
-import ru.virtusystems.database.model.types.ContractStatus;
-import ru.virtusystems.database.repository.ContractRepository;
-import ru.virtusystems.dto.DmsTariffModel;
-import ru.virtusystems.mapper.ContractMapper;
-import ru.virtusystems.service.StandardClientService;
+import ru.virtusystems.domain.client.StandardClientService;
+import ru.virtusystems.domain.io.SaveRequest;
+import ru.virtusystems.domain.io.UpdateRequest;
+import ru.virtusystems.domain.io.IssueRequest;
+import ru.virtusystems.domain.model.Contract;
+import ru.virtusystems.domain.model.types.ContractStatus;
+import ru.virtusystems.domain.port.repository.ContractRepository;
+import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
+import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
 
 import java.time.LocalDateTime;
 
-@Service
 @RequiredArgsConstructor
 public class DmsContractService {
     private final DmsCalculationService dmsCalculationService;
@@ -27,30 +22,25 @@ public class DmsContractService {
     private final DmsContractDatesService contractDatesService;
 
     private final ContractRepository contractRepository;
-    private final ContractMapper contractMapper;
 
-    @Transactional
-    public ContractResponse calculate(DmsCalculateRequest calculateRequest) {
+    public Contract calculate(DmsCalculateRequest calculateRequest) {
         DmsTariffModel newState = dmsCalculationService.calculateTariffModel(calculateRequest);
 
-        Contract.ContractBuilder contractBuilder = Contract.builder();
-        contractBuilder.calcId(dmsCalcIdGenerator.generateCalcId())
+        return contractRepository.save(Contract.builder()
+                .calcId(dmsCalcIdGenerator.generateCalcId())
                 .params(newState.getParameters())
                 .premium(newState.getTotalPremium())
                 .insuredSum(newState.getInsuranceSum())
                 .calcDate(LocalDateTime.now())
                 .startDate(contractDatesService.startDate())
-                .endDate(newState.getEndDate());
+                .endDate(newState.getEndDate())
+                // TODO можно сделать StateMachine для контроля переходов между статусами
+                .status(ContractStatus.RATE)
+                .build());
 
-        contractBuilder.status(ContractStatus.RATE);
-
-        return ContractResponse.builder()
-                .contract(contractMapper.toDto(contractRepository.save(contractBuilder.build())))
-                .build();
     }
 
-    @Transactional
-    public ContractResponse save(SaveRequest saveRequest) {
+    public Contract save(SaveRequest<DmsCalculateRequest> saveRequest) {
         DmsCalculateRequest calculateRequest = saveRequest.getCalcRequest();
         DmsTariffModel newState;
         if (calculateRequest != null) {
@@ -60,27 +50,21 @@ public class DmsContractService {
         }
 
 
-        Contract.ContractBuilder contractBuilder = Contract.builder();
-        contractBuilder.calcId(dmsCalcIdGenerator.generateCalcId())
+        return contractRepository.save(Contract.builder().calcId(dmsCalcIdGenerator.generateCalcId())
                 .number(dmsContractNumberGenerator.generateContractNumber(newState))
                 .params(newState.getParameters())
                 .premium(newState.getTotalPremium())
                 .insuredSum(newState.getInsuranceSum())
                 .calcDate(LocalDateTime.now())
                 .startDate(contractDatesService.startDate())
-                .endDate(newState.getEndDate());
-
-        contractBuilder.insured(insuredService.updateOrCreateInsured(saveRequest.getInsured()));
-        // TODO можно сделать StateMachine для контроля переходов между статусами
-        contractBuilder.status(ContractStatus.PROJECT);
-
-        return ContractResponse.builder()
-                .contract(contractMapper.toDto(contractRepository.save(contractBuilder.build())))
-                .build();
+                .endDate(newState.getEndDate())
+                .insured(insuredService.updateOrCreateInsured(saveRequest.getInsured()))
+                // TODO можно сделать StateMachine для контроля переходов между статусами
+                .status(ContractStatus.PROJECT)
+                .build());
     }
 
-    @Transactional
-    public ContractResponse update(UpdateRequest updateRequest) {
+    public Contract update(UpdateRequest<DmsCalculateRequest> updateRequest) {
         return contractRepository.findById(updateRequest.getPolicyId())
                 .map(contract -> {
                     DmsCalculateRequest calculateRequest = updateRequest.getCalcRequest();
@@ -99,26 +83,20 @@ public class DmsContractService {
                     // TODO можно сделать StateMachine для контроля переходов между статусами
                     contract.setStatus(ContractStatus.PROJECT);
 
-                    return ContractResponse.builder()
-                            .contract(contractMapper.toDto(contractRepository.save(contract)))
-                            .build();
+                    return contractRepository.save(contract);
                 })
                 .orElseThrow(() -> new RuntimeException(
                         "Contract with id=" + updateRequest.getPolicyId() + " not found"
                 ));
     }
 
-    @Transactional
-    public ContractResponse issue(IssueRequest issueRequest) {
+    public Contract issue(IssueRequest issueRequest) {
         return contractRepository.findById(issueRequest.getPolicyId())
                 .map(contract -> {
                     // TODO проверки перед оформлением(премия != null, всякие обязательные штуки для оформления и т.д.)
                     contract.setStatus(ContractStatus.ISSUED);
-                    Contract save = contractRepository.save(contract);
 
-                    return ContractResponse.builder()
-                            .contract(contractMapper.toDto(save))
-                            .build();
+                    return contractRepository.save(contract);
                 })
                 .orElseThrow(() -> new RuntimeException(
                         "Contract with id=" + issueRequest.getPolicyId() + " not found"

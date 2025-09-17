@@ -1,7 +1,8 @@
 package ru.virtusystems.domain.port;
 
-import ru.virtusystems.database.model.Insured;
-import ru.virtusystems.dto.InsuredRequiredParams;
+
+import ru.virtusystems.domain.model.Insured;
+import ru.virtusystems.domain.model.InsuredRequiredParams;
 
 import java.util.Optional;
 

@@ -10,7 +10,15 @@ repositories {
     mavenCentral()
 }
 
+apply from: "${rootDir}/versions.gradle"
+
 dependencies {
+    // MapStruct
+    implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"
+    // Совместимость MapStruct с Lombok
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:${versions.mapstruct_lombok_binding}"
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }

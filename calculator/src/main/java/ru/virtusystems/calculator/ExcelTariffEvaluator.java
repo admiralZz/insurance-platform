@@ -4,19 +4,21 @@ import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.stereotype.Component;
+import ru.virtusystems.calculator.mapper.ContractParametersMapper;
+import ru.virtusystems.domain.model.evaluator.TariffEvaluationState;
+import ru.virtusystems.domain.port.AccessibleTypesCollector;
 import ru.virtusystems.domain.port.TariffEvaluator;
-import ru.virtusystems.mapper.ContractParametersMapper;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-@Component
 @RequiredArgsConstructor
 public class ExcelTariffEvaluator implements TariffEvaluator {
     private static final String MAIN_LIST_NAME = "ПараметрыПродукта";
@@ -30,8 +32,9 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
     private static final int HEADER_ROW = 9;
     private static final int START_PARAMS_ROW = HEADER_ROW + 4;
 
-    private final ContractParametersMapper contractParametersMapper;
-    private final ResourceLoader resourceLoader;
+    private final Path pathToExcelFile;
+    private final AccessibleTypesCollector accessibleTypesCollector;
+    private final ContractParametersMapper contractParametersMapper = new ContractParametersMapper(accessibleTypesCollector);
 
     @Override
     public TariffEvaluationState evaluateState(TariffEvaluationState inputState) {
@@ -313,12 +316,12 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
     }
 
     private Workbook getTemplate() throws IOException {
-        return getWorkbook("classpath:DMS_pri_DTP_ver1_rev25.xls");
+        return getWorkbook();
     }
 
-    private Workbook getWorkbook(String filename) throws IOException {
-        ;
-        InputStream fis = resourceLoader.getResource(filename).getInputStream();
+    private Workbook getWorkbook() throws IOException {
+        String filename = pathToExcelFile.getFileName().toString();
+        InputStream fis = Files.newInputStream(pathToExcelFile);
         if (filename.toLowerCase().endsWith("xlsx")) {
             return new XSSFWorkbook(fis);
         } else if (filename.toLowerCase().endsWith("xls")) {

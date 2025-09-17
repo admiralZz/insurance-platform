@@ -1,6 +1,7 @@
 package ru.virtusystems.domain.port;
 
-import ru.virtusystems.api.request.DmsCalculateRequest;
+
+import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
 
 public interface CalcValidateService {
     void validate(DmsCalculateRequest calculateRequest) throws Exception;

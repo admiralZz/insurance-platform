@@ -15,16 +15,15 @@ repositories {
 apply from: "${rootDir}/versions.gradle"
 
 dependencies {
+    implementation project(':calculator')
+    implementation project(':domain')
+
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${versions.springdoc}"
     implementation 'org.liquibase:liquibase-core'
-
-    // Excel
-    implementation "org.apache.poi:poi:${versions.apache_poi}"
-    implementation "org.apache.poi:poi-ooxml:${versions.apache_poi}"
 
     // MapStruct
     implementation "org.mapstruct:mapstruct:${versions.mapstruct}"

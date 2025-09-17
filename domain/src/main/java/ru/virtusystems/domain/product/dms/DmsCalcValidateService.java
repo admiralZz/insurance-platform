@@ -1,15 +1,13 @@
 package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import ru.virtusystems.api.request.DmsCalculateRequest;
+import ru.virtusystems.domain.StandardCalcValidateService;
 import ru.virtusystems.domain.port.AccessibleTypesCollector;
-import ru.virtusystems.dto.DmsTariffModel;
-import ru.virtusystems.service.StandardCalcValidateService;
+import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
+import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
 
 import java.util.Map;
 
-@Service
 @RequiredArgsConstructor
 public class DmsCalcValidateService extends StandardCalcValidateService {
 

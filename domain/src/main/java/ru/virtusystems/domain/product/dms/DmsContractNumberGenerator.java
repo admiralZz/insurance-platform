@@ -1,22 +1,18 @@
 package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.database.model.ContractNumberCounter;
-import ru.virtusystems.database.repository.ContractNumberCounterRepository;
-import ru.virtusystems.dto.DmsTariffModel;
+import ru.virtusystems.domain.model.ContractNumberCounter;
+import ru.virtusystems.domain.port.repository.ContractNumberCounterRepository;
+import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
 
-@Service
 @RequiredArgsConstructor
 public class DmsContractNumberGenerator {
 
     private static final Long DMS_ID = 1L;
     private final ContractNumberCounterRepository contractNumberCounterRepository;
 
-    @Transactional
     public String generateContractNumber(DmsTariffModel newState) {
-        ContractNumberCounter counter = contractNumberCounterRepository.findByIdForUpdate(DMS_ID)
+        ContractNumberCounter counter = contractNumberCounterRepository.findById(DMS_ID)
                 .orElseGet(() -> {
                     ContractNumberCounter c = new ContractNumberCounter();
                     c.setId(DMS_ID);

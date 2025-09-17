@@ -1,9 +1,9 @@
-package ru.virtusystems.domain.model;
+package ru.virtusystems.domain.model.evaluator;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-import ru.virtusystems.database.model.types.ContractParameter;
+import ru.virtusystems.domain.model.types.ContractParameter;
 
 import java.util.ArrayList;
 import java.util.List;

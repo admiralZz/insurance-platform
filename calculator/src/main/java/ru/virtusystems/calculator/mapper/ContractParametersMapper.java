@@ -1,15 +1,13 @@
-package ru.virtusystems.platform.mapper;
+package ru.virtusystems.calculator.mapper;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import ru.virtusystems.calculator.IOParameter;
-import ru.virtusystems.database.model.types.ContractParameter;
-import ru.virtusystems.service.port.AccessibleTypesCollector;
+import ru.virtusystems.domain.model.types.ContractParameter;
+import ru.virtusystems.domain.port.AccessibleTypesCollector;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component
 @RequiredArgsConstructor
 public class ContractParametersMapper {
 

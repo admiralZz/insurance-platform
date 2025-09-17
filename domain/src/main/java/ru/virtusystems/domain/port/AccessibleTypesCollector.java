@@ -1,6 +1,7 @@
 package ru.virtusystems.domain.port;
 
-import ru.virtusystems.database.model.types.ContractParameter;
+
+import ru.virtusystems.domain.model.types.ContractParameter;
 
 import java.util.Map;
 

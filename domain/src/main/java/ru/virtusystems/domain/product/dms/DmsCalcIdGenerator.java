@@ -1,26 +1,22 @@
 package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.database.model.CalcCounter;
-import ru.virtusystems.database.repository.CalcCounterRepository;
+import ru.virtusystems.domain.model.CalcCounter;
+import ru.virtusystems.domain.port.repository.CalcCounterRepository;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-@Service
 @RequiredArgsConstructor
 public class DmsCalcIdGenerator {
 
     private final CalcCounterRepository repository;
 
-    @Transactional
     public String generateCalcId() {
         LocalDate today = LocalDate.now();
 
         // читаем строку с блокировкой
-        CalcCounter counter = repository.findByDayForUpdate(today)
+        CalcCounter counter = repository.findByDay(today)
                 .orElseGet(() -> {
                     CalcCounter newCounter = new CalcCounter();
                     newCounter.setDay(today);

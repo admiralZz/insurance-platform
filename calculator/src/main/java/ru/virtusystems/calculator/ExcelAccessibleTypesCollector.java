@@ -2,14 +2,12 @@ package ru.virtusystems.calculator;
 
 // TODO доделать класс чтобы брал из реальной таблицы ОДЗ
 
-import org.springframework.stereotype.Component;
-import ru.virtusystems.database.model.types.ContractParameter;
 import ru.virtusystems.domain.port.AccessibleTypesCollector;
+import ru.virtusystems.domain.model.types.ContractParameter;
 
 import java.util.Map;
 import java.util.Optional;
 
-@Component
 public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
     private static final String MAIN_LIST_NAME = "ОДЗ";
     private static final String COLUMN_PARAM_NAME = "ПарамПрод.Назв";

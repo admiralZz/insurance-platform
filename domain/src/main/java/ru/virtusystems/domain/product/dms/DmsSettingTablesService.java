@@ -1,19 +1,16 @@
 package ru.virtusystems.domain.product.dms;
 
-import jakarta.annotation.PostConstruct;
-import org.springframework.stereotype.Service;
-import ru.virtusystems.service.port.SettingTablesService;
+
+import ru.virtusystems.domain.port.SettingTablesService;
 
 import java.math.BigDecimal;
 import java.util.Map;
 
-@Service
 public class DmsSettingTablesService implements SettingTablesService {
 
     private Map<String, BigDecimal> insuranceSum;
     private Map<String, BigDecimal> insurancePremium;
 
-    @PostConstruct
     public void init() {
         insuranceSum = Map.of("Лайт", BigDecimal.valueOf(350000),
                 "Стандарт", BigDecimal.valueOf(600000),

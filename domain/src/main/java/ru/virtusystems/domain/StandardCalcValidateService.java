@@ -1,11 +1,9 @@
 package ru.virtusystems.domain;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import ru.virtusystems.api.request.DmsCalculateRequest;
-import ru.virtusystems.service.port.CalcValidateService;
+import ru.virtusystems.domain.port.CalcValidateService;
+import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
 
-@Service
 @RequiredArgsConstructor
 public class StandardCalcValidateService implements CalcValidateService {
 

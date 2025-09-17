@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
-import ru.virtusystems.database.model.types.ContractParameter;
-import ru.virtusystems.database.model.types.ContractStatus;
+import ru.virtusystems.domain.model.types.ContractParameter;
+import ru.virtusystems.domain.model.types.ContractStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

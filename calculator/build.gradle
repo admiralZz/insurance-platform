@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id "io.freefair.lombok" version "8.4"
 }
 
 group = 'ru.virtusystems'
@@ -9,8 +10,13 @@ repositories {
     mavenCentral()
 }
 
+apply from: "${rootDir}/versions.gradle"
+
 dependencies {
     implementation project(':domain')
+    // Excel
+    implementation "org.apache.poi:poi:${versions.apache_poi}"
+    implementation "org.apache.poi:poi-ooxml:${versions.apache_poi}"
 
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'

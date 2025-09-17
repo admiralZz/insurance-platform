@@ -1,10 +1,10 @@
-package ru.virtusystems.domain.product.dms.dto;
+package ru.virtusystems.domain.product.dms.model;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-import ru.virtusystems.database.model.types.ContractParameter;
-import ru.virtusystems.domain.model.TariffModel;
-import ru.virtusystems.utils.AmountUtil;
+import ru.virtusystems.domain.model.evaluator.TariffModel;
+import ru.virtusystems.domain.model.types.ContractParameter;
+import ru.virtusystems.domain.utils.AmountUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
