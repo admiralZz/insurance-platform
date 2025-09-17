@@ -8,18 +8,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "calc_counter")
-public class CalcCounter {
+@Table(name = "contract_number_counter")
+public class ContractNumberCounterEntity {
 
     @Id
-    private LocalDate day;
+    private Long id;
 
     private Long counter;
 }

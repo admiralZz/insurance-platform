@@ -11,6 +11,10 @@ public class DmsSettingTablesService implements SettingTablesService {
     private Map<String, BigDecimal> insuranceSum;
     private Map<String, BigDecimal> insurancePremium;
 
+    public DmsSettingTablesService() {
+        init();
+    }
+
     public void init() {
         insuranceSum = Map.of("Лайт", BigDecimal.valueOf(350000),
                 "Стандарт", BigDecimal.valueOf(600000),

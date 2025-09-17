@@ -5,15 +5,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import ru.virtusystems.database.model.CalcCounter;
+import ru.virtusystems.platform.database.model.ContractNumberCounterEntity;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
-public interface CalcCounterRepository extends JpaRepository<CalcCounter, Long> {
+public interface ContractNumberCounterEntityRepository extends JpaRepository<ContractNumberCounterEntity, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)  // ставим блокировку на строку
-    @Query("select c from CalcCounter c where c.day = :day")
-    Optional<CalcCounter> findByDayForUpdate(@Param("day") LocalDate day);
+    @Query("select c from ContractNumberCounterEntity c where c.id = :id")
+    Optional<ContractNumberCounterEntity> findByIdForUpdate(@Param("id") Long id);
 }
 
 

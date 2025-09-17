@@ -1,6 +1,5 @@
 package ru.virtusystems.calculator;
 
-import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -9,7 +8,6 @@ import ru.virtusystems.domain.model.evaluator.TariffEvaluationState;
 import ru.virtusystems.domain.port.AccessibleTypesCollector;
 import ru.virtusystems.domain.port.TariffEvaluator;
 
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,7 +17,6 @@ import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-@RequiredArgsConstructor
 public class ExcelTariffEvaluator implements TariffEvaluator {
     private static final String MAIN_LIST_NAME = "ПараметрыПродукта";
     private static final String COLUMN_PARAM_NAME = "ПарамПрод.Назв";
@@ -33,8 +30,12 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
     private static final int START_PARAMS_ROW = HEADER_ROW + 4;
 
     private final Path pathToExcelFile;
-    private final AccessibleTypesCollector accessibleTypesCollector;
-    private final ContractParametersMapper contractParametersMapper = new ContractParametersMapper(accessibleTypesCollector);
+    private final ContractParametersMapper contractParametersMapper;
+
+    public ExcelTariffEvaluator(Path pathToExcelFile, AccessibleTypesCollector accessibleTypesCollector) {
+        this.pathToExcelFile = pathToExcelFile;
+        this.contractParametersMapper = new ContractParametersMapper(accessibleTypesCollector);
+    }
 
     @Override
     public TariffEvaluationState evaluateState(TariffEvaluationState inputState) {

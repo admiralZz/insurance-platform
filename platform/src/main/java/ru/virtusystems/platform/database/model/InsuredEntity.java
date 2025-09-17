@@ -2,7 +2,7 @@ package ru.virtusystems.platform.database.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import ru.virtusystems.database.model.types.Gender;
+import ru.virtusystems.domain.model.types.Gender;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "insured")
-public class Insured {
+public class InsuredEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -63,6 +63,6 @@ public class Insured {
     private String regApartment;
     private String regAddressLine;
 
-    @OneToMany(mappedBy = "insured", fetch = FetchType.LAZY)
-    private List<Contract> contracts;
+    @OneToMany(mappedBy = "insuredEntity", fetch = FetchType.LAZY)
+    private List<ContractEntity> contractEntities;
 }

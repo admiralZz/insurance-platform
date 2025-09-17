@@ -1,6 +1,7 @@
 package ru.virtusystems.domain.client;
 
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.factory.Mappers;
 import ru.virtusystems.domain.mapper.InsuredMapper;
 import ru.virtusystems.domain.model.Insured;
 import ru.virtusystems.domain.model.InsuredRequiredParams;
@@ -12,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StandardClientService implements ClientService {
     private final InsuredRepository insuredRepository;
-    private final InsuredMapper insuredMapper;
+    private final InsuredMapper insuredMapper = Mappers.getMapper(InsuredMapper.class);
 
     @Override
     public Optional<Insured> findInsuredByRequiredParams(InsuredRequiredParams insuredRequiredParams) {
@@ -32,6 +33,7 @@ public class StandardClientService implements ClientService {
     Нужно быть аккуратным, чтобы insuredMapper.updateEntityFromDto не затирал не переданные поля null-ами.
 
      */
+    @Override
     public Insured updateOrCreateInsured(Insured newInsured) {
         InsuredRequiredParams params = InsuredRequiredParams.builder()
                 .firstName(newInsured.getFirstName())

@@ -2,7 +2,7 @@ package ru.virtusystems.platform.dto;
 
 import lombok.Builder;
 import lombok.Value;
-import ru.virtusystems.database.model.types.Gender;
+import ru.virtusystems.domain.model.types.Gender;
 
 import java.time.LocalDate;
 

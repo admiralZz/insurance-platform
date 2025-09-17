@@ -1,22 +1,22 @@
 package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
-import ru.virtusystems.domain.client.StandardClientService;
+import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
 import ru.virtusystems.domain.io.UpdateRequest;
-import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.model.Contract;
 import ru.virtusystems.domain.model.types.ContractStatus;
+import ru.virtusystems.domain.port.ClientService;
 import ru.virtusystems.domain.port.repository.ContractRepository;
-import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
 import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
+import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
 
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 public class DmsContractService {
     private final DmsCalculationService dmsCalculationService;
-    private final StandardClientService insuredService;
+    private final ClientService clientService;
     private final DmsCalcIdGenerator dmsCalcIdGenerator;
     private final DmsContractNumberGenerator dmsContractNumberGenerator;
     private final DmsContractDatesService contractDatesService;
@@ -49,7 +49,6 @@ public class DmsContractService {
             newState = DmsTariffModel.builder().build();
         }
 
-
         return contractRepository.save(Contract.builder().calcId(dmsCalcIdGenerator.generateCalcId())
                 .number(dmsContractNumberGenerator.generateContractNumber(newState))
                 .params(newState.getParameters())
@@ -58,7 +57,7 @@ public class DmsContractService {
                 .calcDate(LocalDateTime.now())
                 .startDate(contractDatesService.startDate())
                 .endDate(newState.getEndDate())
-                .insured(insuredService.updateOrCreateInsured(saveRequest.getInsured()))
+                .insured(clientService.updateOrCreateInsured(saveRequest.getInsured()))
                 // TODO можно сделать StateMachine для контроля переходов между статусами
                 .status(ContractStatus.PROJECT)
                 .build());
@@ -79,7 +78,7 @@ public class DmsContractService {
                         contract.setEndDate(newState.getEndDate());
                     }
 
-                    contract.setInsured(insuredService.updateOrCreateInsured(updateRequest.getInsured()));
+                    contract.setInsured(clientService.updateOrCreateInsured(updateRequest.getInsured()));
                     // TODO можно сделать StateMachine для контроля переходов между статусами
                     contract.setStatus(ContractStatus.PROJECT);
 
