@@ -6,10 +6,10 @@ import ru.virtusystems.domain.model.Insured;
 
 @Value
 @Builder
-public class UpdateRequest<T> {
+public class UpdateRequest {
     Long policyId;
 
-    T calcRequest;
+    CalculateRequest calcRequest;
 
     Insured insured;
 }

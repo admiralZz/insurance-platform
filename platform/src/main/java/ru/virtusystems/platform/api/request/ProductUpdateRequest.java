@@ -6,14 +6,15 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.virtusystems.platform.dto.CreateInsuredDto;
 
+import java.util.Map;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ProductUpdateRequest extends ProductRequest {
     Long policyId;
 
-    @Valid
     @Nullable
-    ProductCalculateRequest calcRequest;
+    Map<String, Object> calc;
 
     @Valid
     @Nullable

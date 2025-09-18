@@ -1,6 +1,8 @@
 package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
+import ru.virtusystems.domain.ContractService;
+import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
 import ru.virtusystems.domain.io.UpdateRequest;
@@ -9,22 +11,25 @@ import ru.virtusystems.domain.model.types.ContractStatus;
 import ru.virtusystems.domain.port.ClientService;
 import ru.virtusystems.domain.port.repository.ContractRepository;
 import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
+import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
 import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
 
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
-public class DmsContractService {
+public class DmsContractService implements ContractService {
     private final DmsCalculationService dmsCalculationService;
     private final ClientService clientService;
     private final DmsCalcIdGenerator dmsCalcIdGenerator;
     private final DmsContractNumberGenerator dmsContractNumberGenerator;
     private final DmsContractDatesService contractDatesService;
-
+    private final DmsCalculateRequestMapper calculateRequestMapper;
     private final ContractRepository contractRepository;
 
-    public Contract calculate(DmsCalculateRequest calculateRequest) {
-        DmsTariffModel newState = dmsCalculationService.calculateTariffModel(calculateRequest);
+    @Override
+    public Contract calculate(CalculateRequest calculateRequest) {
+        DmsCalculateRequest dmsCalculateRequest = calculateRequestMapper.toDmsCalculateRequest(calculateRequest);
+        DmsTariffModel newState = dmsCalculationService.calculateTariffModel(dmsCalculateRequest);
 
         return contractRepository.save(Contract.builder()
                 .calcId(dmsCalcIdGenerator.generateCalcId())
@@ -40,11 +45,13 @@ public class DmsContractService {
 
     }
 
-    public Contract save(SaveRequest<DmsCalculateRequest> saveRequest) {
-        DmsCalculateRequest calculateRequest = saveRequest.getCalcRequest();
+    @Override
+    public Contract save(SaveRequest saveRequest) {
+        CalculateRequest calculateRequest = saveRequest.getCalcRequest();
         DmsTariffModel newState;
         if (calculateRequest != null) {
-            newState = dmsCalculationService.calculateTariffModel(calculateRequest);
+            DmsCalculateRequest dmsCalculateRequest = calculateRequestMapper.toDmsCalculateRequest(calculateRequest);
+            newState = dmsCalculationService.calculateTariffModel(dmsCalculateRequest);
         } else {
             newState = DmsTariffModel.builder().build();
         }
@@ -63,13 +70,15 @@ public class DmsContractService {
                 .build());
     }
 
-    public Contract update(UpdateRequest<DmsCalculateRequest> updateRequest) {
+    @Override
+    public Contract update(UpdateRequest updateRequest) {
         return contractRepository.findById(updateRequest.getPolicyId())
                 .map(contract -> {
-                    DmsCalculateRequest calculateRequest = updateRequest.getCalcRequest();
+                    CalculateRequest calculateRequest = updateRequest.getCalcRequest();
                     DmsTariffModel newState;
                     if (calculateRequest != null) {
-                        newState = dmsCalculationService.calculateTariffModel(calculateRequest);
+                        DmsCalculateRequest dmsCalculateRequest = calculateRequestMapper.toDmsCalculateRequest(calculateRequest);
+                        newState = dmsCalculationService.calculateTariffModel(dmsCalculateRequest);
                         contract.setCalcId(dmsCalcIdGenerator.generateCalcId());
                         contract.setPremium(newState.getTotalPremium());
                         contract.setInsuredSum(newState.getInsuranceSum());
@@ -89,6 +98,7 @@ public class DmsContractService {
                 ));
     }
 
+    @Override
     public Contract issue(IssueRequest issueRequest) {
         return contractRepository.findById(issueRequest.getPolicyId())
                 .map(contract -> {

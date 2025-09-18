@@ -1,4 +1,4 @@
-package ru.virtusystems.platform.dispatcher;
+package ru.virtusystems.platform.service;
 
 import ru.virtusystems.platform.api.request.ProductCalculateRequest;
 import ru.virtusystems.platform.api.request.ProductIssueRequest;

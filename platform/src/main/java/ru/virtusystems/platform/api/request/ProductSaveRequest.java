@@ -6,12 +6,13 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import ru.virtusystems.platform.dto.CreateInsuredDto;
 
+import java.util.Map;
+
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ProductSaveRequest extends ProductRequest {
-    @Valid
     @Nullable
-    ProductCalculateRequest calcRequest;
+    Map<String, Object> calc;
 
     @Valid
     @Nullable

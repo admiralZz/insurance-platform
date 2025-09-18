@@ -9,7 +9,7 @@ import ru.virtusystems.platform.api.request.ProductIssueRequest;
 import ru.virtusystems.platform.api.request.ProductSaveRequest;
 import ru.virtusystems.platform.api.request.ProductUpdateRequest;
 import ru.virtusystems.platform.api.response.ContractResponse;
-import ru.virtusystems.platform.dispatcher.ProductDispatcher;
+import ru.virtusystems.platform.service.ProductDispatcher;
 
 @RestController
 @RequestMapping("/api/partner")

@@ -6,8 +6,8 @@ import ru.virtusystems.domain.model.Insured;
 
 @Value
 @Builder
-public class SaveRequest <T>{
-    T calcRequest;
+public class SaveRequest {
+    CalculateRequest calcRequest;
 
     Insured insured;
 }
