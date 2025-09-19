@@ -1,53 +1,56 @@
-package ru.virtusystems.domain.product.dms;
+package ru.virtusystems.domain.product.zachitadohoda20;
 
 import lombok.RequiredArgsConstructor;
+import ru.virtusystems.domain.model.Product;
+import ru.virtusystems.domain.product.ContractService;
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
 import ru.virtusystems.domain.io.UpdateRequest;
 import ru.virtusystems.domain.model.Contract;
-import ru.virtusystems.domain.model.Product;
 import ru.virtusystems.domain.model.types.ContractStatus;
 import ru.virtusystems.domain.port.ClientService;
 import ru.virtusystems.domain.port.repository.ContractRepository;
-import ru.virtusystems.domain.product.ContractService;
 import ru.virtusystems.domain.product.ProductService;
+import ru.virtusystems.domain.product.dms.DmsContractNumberGenerator;
 import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
-import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
 import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
+import ru.virtusystems.domain.product.zachitadohoda20.io.ZachitaDohoda20CalculateRequest;
+import ru.virtusystems.domain.product.zachitadohoda20.mapper.ZachitaDohoda20CalculateRequestMapper;
+import ru.virtusystems.domain.product.zachitadohoda20.model.ZachitaDohoda20TariffModel;
 
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
-public class DmsContractService implements ContractService {
-    public static final String PRODUCT_NAME = "ДМС при ДТП";
+public class ZachitaDohoda20ContractService implements ContractService {
+    public static final String PRODUCT_NAME = "Защита дохода 2.0";
 
-    private final DmsCalculationService dmsCalculationService;
+    private final ZachitaDohoda20CalculationService calculationService;
     private final ClientService clientService;
     private final ProductService productService;
-    private final DmsCalcIdGenerator dmsCalcIdGenerator;
-    private final DmsContractNumberGenerator dmsContractNumberGenerator;
-    private final DmsContractDatesService contractDatesService;
-    private final DmsCalculateRequestMapper calculateRequestMapper;
+    private final ZachitaDohoda20CalcIdGenerator calcIdGenerator;
+    private final ZachitaDohoda20ContractNumberGenerator contractNumberGenerator;
+    private final ZachitaDohoda20ContractDatesService contractDatesService;
+    private final ZachitaDohoda20CalculateRequestMapper calculateRequestMapper;
     private final ContractRepository contractRepository;
 
     @Override
     public Product create() {
         return productService.getOrCreate(Product.builder()
                 .name(PRODUCT_NAME)
-                .description("Продукт мед. страхования при ДТП")
+                .description("Продукт страхования дохода при инвестиционных рисках")
                 .build());
     }
 
     @Override
     public Contract calculate(CalculateRequest calculateRequest) {
-        DmsCalculateRequest dmsCalculateRequest = calculateRequestMapper.toDmsCalculateRequest(calculateRequest);
-        DmsTariffModel newState = dmsCalculationService.calculateTariffModel(dmsCalculateRequest);
+        ZachitaDohoda20CalculateRequest dmsCalculateRequest = calculateRequestMapper.toZachitaDohoda20CalculateRequest(calculateRequest);
+        ZachitaDohoda20TariffModel newState = calculationService.calculateTariffModel(dmsCalculateRequest);
         Product product = productService.getProductByName(PRODUCT_NAME);
 
         return contractRepository.save(Contract.builder()
                 .product(product)
-                .calcId(dmsCalcIdGenerator.generateCalcId(product))
+                .calcId(calcIdGenerator.generateCalcId(product))
                 .params(newState.getParameters())
                 .premium(newState.getTotalPremium())
                 .insuredSum(newState.getInsuranceSum())
@@ -63,20 +66,19 @@ public class DmsContractService implements ContractService {
     @Override
     public Contract save(SaveRequest saveRequest) {
         CalculateRequest calculateRequest = saveRequest.getCalcRequest();
-        DmsTariffModel newState;
+        ZachitaDohoda20TariffModel newState;
         if (calculateRequest != null) {
-            DmsCalculateRequest dmsCalculateRequest = calculateRequestMapper.toDmsCalculateRequest(calculateRequest);
-            newState = dmsCalculationService.calculateTariffModel(dmsCalculateRequest);
+            ZachitaDohoda20CalculateRequest dmsCalculateRequest = calculateRequestMapper.toZachitaDohoda20CalculateRequest(calculateRequest);
+            newState = calculationService.calculateTariffModel(dmsCalculateRequest);
         } else {
-            newState = DmsTariffModel.builder().build();
+            newState = ZachitaDohoda20TariffModel.builder().build();
         }
         Product product = productService.getProductByName(PRODUCT_NAME);
 
         return contractRepository.save(Contract.builder()
                 .product(product)
-                .calcId(dmsCalcIdGenerator.generateCalcId(
-                        product))
-                .number(dmsContractNumberGenerator.generateContractNumber(newState, product))
+                .calcId(calcIdGenerator.generateCalcId(productService.getProductByName(PRODUCT_NAME)))
+                .number(contractNumberGenerator.generateContractNumber(newState, product))
                 .params(newState.getParameters())
                 .premium(newState.getTotalPremium())
                 .insuredSum(newState.getInsuranceSum())
@@ -96,12 +98,11 @@ public class DmsContractService implements ContractService {
         return contractRepository.findByIdAndProduct(updateRequest.getPolicyId(), product)
                 .map(contract -> {
                     CalculateRequest calculateRequest = updateRequest.getCalcRequest();
-                    DmsTariffModel newState;
+                    ZachitaDohoda20TariffModel newState;
                     if (calculateRequest != null) {
-                        DmsCalculateRequest dmsCalculateRequest = calculateRequestMapper.toDmsCalculateRequest(calculateRequest);
-                        newState = dmsCalculationService.calculateTariffModel(dmsCalculateRequest);
-                        contract.setCalcId(dmsCalcIdGenerator.generateCalcId(
-                                productService.getProductByName(PRODUCT_NAME)));
+                        ZachitaDohoda20CalculateRequest dmsCalculateRequest = calculateRequestMapper.toZachitaDohoda20CalculateRequest(calculateRequest);
+                        newState = calculationService.calculateTariffModel(dmsCalculateRequest);
+                        contract.setCalcId(calcIdGenerator.generateCalcId(productService.getProductByName(PRODUCT_NAME)));
                         contract.setPremium(newState.getTotalPremium());
                         contract.setInsuredSum(newState.getInsuranceSum());
                         contract.setCalcDate(LocalDateTime.now());

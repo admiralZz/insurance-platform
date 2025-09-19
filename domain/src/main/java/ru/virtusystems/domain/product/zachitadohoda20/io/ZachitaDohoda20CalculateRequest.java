@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.product.dms.io;
+package ru.virtusystems.domain.product.zachitadohoda20.io;
 
 import lombok.Builder;
 import lombok.Value;
@@ -6,7 +6,7 @@ import ru.virtusystems.domain.validation.ValidatedRequest;
 
 @Value
 @Builder
-public class DmsCalculateRequest implements ValidatedRequest {
+public class ZachitaDohoda20CalculateRequest implements ValidatedRequest {
     String program;
     String period;
 }

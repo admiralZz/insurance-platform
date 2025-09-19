@@ -51,6 +51,4 @@ public class Insured {
     private String regBuilding;
     private String regApartment;
     private String regAddressLine;
-
-    private List<Contract> contracts;
 }

@@ -1,10 +1,11 @@
 package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
-import ru.virtusystems.domain.StandardCalcValidateService;
+import ru.virtusystems.domain.validation.StandardCalcValidateService;
+import ru.virtusystems.domain.validation.ValidatedRequest;
 import ru.virtusystems.domain.port.AccessibleTypesCollector;
-import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
 import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
+import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
 
 import java.util.Map;
 
@@ -14,11 +15,12 @@ public class DmsCalcValidateService extends StandardCalcValidateService {
     private final AccessibleTypesCollector accessibleTypesCollector;
 
     @Override
-    public void validate(DmsCalculateRequest calculateRequest) throws Exception{
+    public void validate(ValidatedRequest calculateRequest) throws Exception{
         super.validate(calculateRequest);
+        DmsCalculateRequest dmsCalculateRequest = (DmsCalculateRequest) calculateRequest;
 
-        checkProgram(calculateRequest.getProgram());
-        checkPeriod(calculateRequest.getPeriod());
+        checkProgram(dmsCalculateRequest.getProgram());
+        checkPeriod(dmsCalculateRequest.getPeriod());
 
     }
 

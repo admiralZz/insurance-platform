@@ -12,8 +12,8 @@ import java.util.Optional;
 
 public interface CalcCounterEntityRepository extends JpaRepository<CalcCounterEntity, Long> {
     @Lock(LockModeType.PESSIMISTIC_WRITE)  // ставим блокировку на строку
-    @Query("select c from CalcCounterEntity c where c.day = :day")
-    Optional<CalcCounterEntity> findByDayForUpdate(@Param("day") LocalDate day);
+    @Query("select c from CalcCounterEntity c where c.id.day = :day and  c.id.productId = :productId")
+    Optional<CalcCounterEntity> findByDayAndProductIdForUpdate(@Param("day") LocalDate day, @Param("productId") Long productId);
 }
 
 

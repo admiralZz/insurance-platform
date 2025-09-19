@@ -47,7 +47,11 @@ public class ContractEntity {
     @Column(columnDefinition = "jsonb") // именно для Postgres
     private List<ContractParameter> params;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "insured_id")
-    private InsuredEntity insuredEntity;
+    private InsuredEntity insured;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private ProductEntity product;
 }

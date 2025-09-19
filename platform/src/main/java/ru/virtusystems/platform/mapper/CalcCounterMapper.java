@@ -10,9 +10,13 @@ import ru.virtusystems.platform.database.model.InsuredEntity;
 import ru.virtusystems.platform.dto.CreateInsuredDto;
 import ru.virtusystems.platform.dto.ReadInsuredDto;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ProductMapper.class})
 public interface CalcCounterMapper {
 
-    CalcCounterEntity toEntity(CalcCounter calcCounter);
-    CalcCounter toDomain(CalcCounterEntity calcCounterEntity);
+    @Mapping(source = "id.day", target = "day")
+    CalcCounter toDomain(CalcCounterEntity entity);
+
+    @Mapping(source = "day", target = "id.day")
+    @Mapping(source = "product.id", target = "id.productId")
+    CalcCounterEntity toEntity(CalcCounter domain);
 }

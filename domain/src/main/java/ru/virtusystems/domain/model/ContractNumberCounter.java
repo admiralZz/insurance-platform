@@ -14,4 +14,6 @@ public class ContractNumberCounter {
     private Long id;
 
     private Long counter;
+
+    private Product product;
 }

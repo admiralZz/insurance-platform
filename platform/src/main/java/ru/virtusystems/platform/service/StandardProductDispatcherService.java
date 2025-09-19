@@ -1,9 +1,10 @@
 package ru.virtusystems.platform.service;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.domain.ContractService;
+import ru.virtusystems.domain.product.ContractService;
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
@@ -24,6 +25,13 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     private final Map<String, ContractService> productServices;
     private final ContractMapper contractMapper;
     private final InsuredMapper insuredMapper;
+
+    @PostConstruct
+    @Transactional
+    public void init() {
+        // TODO перенести в отдельный запускатор продуктов
+        productServices.forEach((name, service) -> service.create());
+    }
 
     @Override
     @Transactional

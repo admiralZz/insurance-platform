@@ -62,7 +62,4 @@ public class InsuredEntity {
     private String regBuilding;
     private String regApartment;
     private String regAddressLine;
-
-    @OneToMany(mappedBy = "insuredEntity", fetch = FetchType.LAZY)
-    private List<ContractEntity> contractEntities;
 }

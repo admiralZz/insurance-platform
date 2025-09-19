@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import ru.virtusystems.calculator.ExcelAccessibleTypesCollector;
 import ru.virtusystems.calculator.ExcelTariffEvaluator;
 import ru.virtusystems.domain.port.ClientService;
+import ru.virtusystems.domain.product.ProductService;
 import ru.virtusystems.domain.product.dms.*;
 import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
 import ru.virtusystems.platform.database.repository.adapter.CalcCounterRepositoryJpaAdapter;
@@ -16,14 +17,13 @@ import java.nio.file.Path;
 @Configuration
 public class DmsProductConfiguration {
 
-    private static final String PRODUCT_NAME = "ДМС при ДТП";
-
     private final Path pathToTariffEvaluator = Path.of(
             "/home/andrey/packages/insurance-platform/calculator/src/test/resources",
             "DMS_pri_DTP_ver1_rev25.xls");
 
-    @Bean(PRODUCT_NAME)
+    @Bean(DmsContractService.PRODUCT_NAME)
     public DmsContractService contractService(ClientService clientService,
+                                              ProductService productService,
                                               ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
                                               CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
                                               ContractNumberCounterRepositoryJpaAdapter contractNumberCounterRepositoryJpaAdapter) {
@@ -40,6 +40,7 @@ public class DmsProductConfiguration {
         return new DmsContractService(
                 calculationService,
                 clientService,
+                productService,
                 calcIdGenerator,
                 contractNumberGenerator,
                 datesService,

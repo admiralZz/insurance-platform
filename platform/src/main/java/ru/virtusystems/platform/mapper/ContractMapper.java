@@ -5,7 +5,7 @@ import ru.virtusystems.domain.model.Contract;
 import ru.virtusystems.platform.database.model.ContractEntity;
 import ru.virtusystems.platform.dto.ReadContractDto;
 
-@Mapper(componentModel = "spring", uses = {InsuredMapper.class })
+@Mapper(componentModel = "spring", uses = {InsuredMapper.class, ProductMapper.class})
 public interface ContractMapper {
 
     ReadContractDto toDto(Contract contract);

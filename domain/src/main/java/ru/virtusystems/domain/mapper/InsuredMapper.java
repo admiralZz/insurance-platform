@@ -9,6 +9,5 @@ import ru.virtusystems.domain.model.Insured;
 public interface InsuredMapper {
 
     @Mapping(target = "id", ignore = true) // ID не должен меняться
-    @Mapping(target = "contracts", ignore = true) // Набор договор не должен меняться
     void updateInsured(Insured source, @MappingTarget Insured target);
 }

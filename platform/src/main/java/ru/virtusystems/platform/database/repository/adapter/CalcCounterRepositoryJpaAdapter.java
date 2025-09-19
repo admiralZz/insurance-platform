@@ -20,8 +20,8 @@ public class CalcCounterRepositoryJpaAdapter implements CalcCounterRepository {
 
 
     @Override
-    public Optional<CalcCounter> findByDay(LocalDate day) {
-        return calcCounterEntityRepository.findByDayForUpdate(day)
+    public Optional<CalcCounter> findByDayAndProductId(LocalDate day, Long productId) {
+        return calcCounterEntityRepository.findByDayAndProductIdForUpdate(day, productId)
                 .map(calcCounterMapper::toDomain);
     }
 

@@ -34,4 +34,5 @@ public class Contract {
     private List<ContractParameter> params;
 
     private Insured insured;
+    private Product product;
 }

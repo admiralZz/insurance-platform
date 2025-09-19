@@ -17,6 +17,41 @@ public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
             "Стандарт", "10",
             "Премиум", "20");
 
+    private final Map<String, String> programm = Map.of(
+            "Пенсионный (автопролонгация)", "07",
+            "Стабильный", "06",
+            "Персональный", "05",
+            "Новый Пенсионный", "04",
+            "Все возможно", "03",
+            "Все удобно", "02",
+            "Все просто", "01",
+            "Стандартный", "075C",
+            "Базовый", "08",
+            "Премиум", "09"
+    );
+
+    private final Map<String, String> insurancePeriod = Map.of(
+            "90 дней", "090",
+            "100 дней", "100",
+            "121 день", "121",
+            "150 дней", "150",
+            "181 день", "181",
+            "200 дней", "200",
+            "367 дней", "367",
+            "395 дней", "395",
+            "397 дней", "397"
+    );
+
+    private final Map<String, String> percentType = Map.of(
+            "Без капитализации", "02",
+            "С капитализацией", "01"
+    );
+    private final Map<String, String> paymentMethods = Map.of(
+            "Оплата через кассу", "10",
+            "Оплата по счету", "20",
+            "Онлайн", "30"
+    );
+
     private final Map<String, String> periods = Map.of("1 год", "01",
             "2 года", "02",
             "3 года", "03",
@@ -27,7 +62,12 @@ public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
 
     private final Map<String, Map<String, String>> accessibleTypes = Map.of(
             "dogovor.programma", programs,
-            "dogovor.SrokStrahGod", periods);
+            "dogovor.programm", programm,
+            "dogovor.insurancePeriod", insurancePeriod,
+            "dogovor.tipprocentov", percentType,
+            "dogovor.sposobOplati", paymentMethods,
+            "dogovor.SrokStrahGod", periods
+    );
 
 
     @Override

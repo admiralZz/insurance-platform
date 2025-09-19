@@ -11,16 +11,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "contract_number_counter")
-public class ContractNumberCounterEntity {
+@Table(name = "product")
+public class ProductEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @MapsId("id")
-    @JoinColumn(name = "product_id")
-    private ProductEntity product;
+    private String name;
 
-    private Long counter;
+    private String description;
 }

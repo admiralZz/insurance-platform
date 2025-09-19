@@ -16,4 +16,6 @@ public class CalcCounter {
     private LocalDate day;
 
     private Long counter;
+
+    private Product product;
 }

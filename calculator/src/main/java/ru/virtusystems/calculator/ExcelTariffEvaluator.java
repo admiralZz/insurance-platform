@@ -103,7 +103,7 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
 
             inputParameters.forEach(inputParameter -> setValueByCode(sheet, inputParameter.fullCode(), inputParameter.inValue(), inputParameter.dictValue()));
             FormulaEvaluator evaluator = templateWb.getCreationHelper().createFormulaEvaluator();
-            evaluator.evaluateAll();
+//            evaluator.evaluateAll();
 
             return readIOParameters(sheet, evaluator);
         }
@@ -346,13 +346,45 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
     private Object getValue(Cell cell, String type) {
         if (cell == null) return null;
 
+        // Вычисляем формулу (если есть)
+        CellType cellType = cell.getCellType();
+        if (cellType == CellType.FORMULA) {
+            try {
+                cellType = cell.getCachedFormulaResultType();
+            } catch (Exception e) {
+                // Если формула с ошибкой (#Н/Д, #REF и т.п.)
+                return null; // или дефолт
+            }
+        }
+
         return switch (type) {
-            case "Строка" -> cell.getStringCellValue();
-            case "Целое", "Вещественный" -> cell.getNumericCellValue();
-            case "Дата" -> cell.getDateCellValue();
-            case "Логический" -> cell.getBooleanCellValue();
+            case "Строка" -> {
+                if (cellType == CellType.STRING) yield cell.getStringCellValue();
+                yield safeToString(cell); // fallback
+            }
+            case "Целое", "Вещественный" -> {
+                if (cellType == CellType.NUMERIC) yield cell.getNumericCellValue();
+                else yield null; // например, пропускаем если ошибка
+            }
+            case "Дата" -> {
+                if (cellType == CellType.NUMERIC && DateUtil.isCellDateFormatted(cell))
+                    yield cell.getDateCellValue();
+                else yield null;
+            }
+            case "Логический" -> {
+                if (cellType == CellType.BOOLEAN) yield cell.getBooleanCellValue();
+                else yield null;
+            }
             default -> null;
         };
+    }
+
+    private String safeToString(Cell cell) {
+        try {
+            return cell.toString();
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private Object evaluateValue(FormulaEvaluator evaluator, Cell cell, String type) {

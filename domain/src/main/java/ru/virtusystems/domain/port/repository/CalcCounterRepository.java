@@ -6,6 +6,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 public interface CalcCounterRepository {
-    Optional<CalcCounter> findByDay(LocalDate day);
+    Optional<CalcCounter> findByDayAndProductId(LocalDate day, Long productId);
     CalcCounter save(CalcCounter calcCounter);
 }
