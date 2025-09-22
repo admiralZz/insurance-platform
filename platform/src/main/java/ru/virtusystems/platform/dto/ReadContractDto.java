@@ -23,6 +23,7 @@ public class ReadContractDto {
     BigDecimal premium;
     BigDecimal insuredSum;
     ReadInsuredDto insured;
+    ReadProductDto product;
     List<ContractParameter> params;
 
 }

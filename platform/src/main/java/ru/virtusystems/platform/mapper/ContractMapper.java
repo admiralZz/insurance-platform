@@ -10,6 +10,8 @@ public interface ContractMapper {
 
     ReadContractDto toDto(Contract contract);
 
+    ReadContractDto toDto(ContractEntity contractEntity);
+
     ContractEntity toEntity(ReadContractDto readContractDto);
 
     ContractEntity toEntity(Contract contract);
