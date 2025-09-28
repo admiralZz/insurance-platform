@@ -1,14 +1,18 @@
 package ru.virtusystems.domain.product.dms;
 
+import ru.virtusystems.domain.dates.ContractDatesService;
+
 import java.time.LocalDateTime;
 import java.util.Map;
 
-public class DmsContractDatesService {
+public class DmsContractDatesService implements ContractDatesService {
 
+    @Override
     public LocalDateTime startDate() {
         return LocalDateTime.now().plusDays(1);
     }
 
+    @Override
     public LocalDateTime endDate(String period) {
         if (period == null) {
             return null;

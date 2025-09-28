@@ -1,18 +1,17 @@
-package ru.virtusystems.domain.product.zachitadohoda20;
+package ru.virtusystems.domain.generators;
 
 import lombok.RequiredArgsConstructor;
 import ru.virtusystems.domain.model.ContractNumberCounter;
 import ru.virtusystems.domain.model.Product;
 import ru.virtusystems.domain.port.repository.ContractNumberCounterRepository;
-import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
-import ru.virtusystems.domain.product.zachitadohoda20.model.ZachitaDohoda20TariffModel;
 
 @RequiredArgsConstructor
-public class ZachitaDohoda20ContractNumberGenerator {
+public class StandardContractNumberGenerator implements ContractNumberGenerator {
 
     private final ContractNumberCounterRepository contractNumberCounterRepository;
 
-    public String generateContractNumber(ZachitaDohoda20TariffModel newState, Product product) {
+    @Override
+    public String generateContractNumber(String productPrefixCode, Product product) {
         ContractNumberCounter counter = contractNumberCounterRepository.findById(product.getId())
                 .orElseGet(() -> {
                     ContractNumberCounter c = new ContractNumberCounter();
@@ -25,6 +24,6 @@ public class ZachitaDohoda20ContractNumberGenerator {
         counter.setCounter(counter.getCounter() + 1);
         contractNumberCounterRepository.save(counter);
 
-        return newState.getProductNumberCode() + String.format("%07d", counter.getCounter());
+        return productPrefixCode + String.format("%07d", counter.getCounter());
     }
 }

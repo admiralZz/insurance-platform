@@ -13,17 +13,17 @@ import java.util.List;
 @Builder
 public class ReadContractDto {
     Long id;
+    ReadProductDto product;
+    ReadInsuredDto insured;
+    ContractStatus status;
     String calcId;
     String number;
-    ContractStatus status;
     LocalDateTime calcDate;
     LocalDateTime issueDate;
     LocalDateTime startDate;
     LocalDateTime endDate;
     BigDecimal premium;
     BigDecimal insuredSum;
-    ReadInsuredDto insured;
-    ReadProductDto product;
     List<ContractParameter> params;
 
 }

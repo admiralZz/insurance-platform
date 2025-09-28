@@ -2,43 +2,53 @@ package ru.virtusystems.domain.product.zachitadohoda20;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import ru.virtusystems.domain.calculation.CalculationService;
+import ru.virtusystems.domain.contract.BaseTariffModel;
+import ru.virtusystems.domain.dates.ContractDatesService;
 import ru.virtusystems.domain.model.evaluator.TariffEvaluationState;
 import ru.virtusystems.domain.port.TariffEvaluator;
 import ru.virtusystems.domain.product.zachitadohoda20.io.ZachitaDohoda20CalculateRequest;
 import ru.virtusystems.domain.product.zachitadohoda20.io.ZachitaDohoda20CalculateResponse;
 import ru.virtusystems.domain.product.zachitadohoda20.model.ZachitaDohoda20TariffModel;
+import ru.virtusystems.domain.validation.ValidatedRequest;
 
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
-public class ZachitaDohoda20CalculationService {
+public class ZachitaDohoda20CalculationService implements CalculationService {
     private final TariffEvaluator tariffEvaluator;
-    private final ZachitaDohoda20ContractDatesService contractDatesService;
+    private final ContractDatesService contractDatesService;
     private final ZachitaDohoda20SettingTablesService settingTablesService;
     private final ZachitaDohoda20CalcValidateService dmsCalcValidateService;
 
-    public ZachitaDohoda20CalculateResponse calculate(ZachitaDohoda20CalculateRequest request) {
-        ZachitaDohoda20TariffModel zachitaDohoda20TariffModel = calculateTariffModel(request);
+    public ZachitaDohoda20CalculateResponse calculate(ValidatedRequest request) {
+        BaseTariffModel tariffModel = calculateTariffModel(request);
 
         return new ZachitaDohoda20CalculateResponse(
-                zachitaDohoda20TariffModel.getTotalPremium(),
-                zachitaDohoda20TariffModel.getInsuranceSum());
+                tariffModel.getTotalPremium(),
+                tariffModel.getInsuranceSum());
     }
 
     @SneakyThrows
-    public ZachitaDohoda20TariffModel calculateTariffModel(ZachitaDohoda20CalculateRequest calculateRequest) {
+    @Override
+    public BaseTariffModel calculateTariffModel(ValidatedRequest calculateRequest) {
         dmsCalcValidateService.validate(calculateRequest);
+        ZachitaDohoda20CalculateRequest zdcRequest = (ZachitaDohoda20CalculateRequest) calculateRequest;
 
-        LocalDateTime endDate = contractDatesService.endDate(calculateRequest.getPeriod());
+        LocalDateTime endDate = contractDatesService.endDate(zdcRequest.getPeriod());
         ZachitaDohoda20TariffModel.ZachitaDohoda20TariffModelBuilder<?, ?> tariffModelBuilder =
                 ZachitaDohoda20TariffModel.builder();
-        tariffModelBuilder.program(calculateRequest.getProgram())
-                .period(calculateRequest.getPeriod())
+        tariffModelBuilder.program(zdcRequest.getProgram())
+                .period(zdcRequest.getPeriod())
                 .issueDate(LocalDateTime.now())
                 .startDate(LocalDateTime.now().plusDays(1))
                 .endDate(endDate)
-                .insuranceSumFromSettings(settingTablesService.getInsuranceSumByProgramNameAndPeriod(calculateRequest.getProgram(), calculateRequest.getPeriod()))
-                .premiumFromSettings(settingTablesService.getPremiumByProgramNameAndPeriod(calculateRequest.getProgram(), calculateRequest.getPeriod()))
+                .insuranceSumFromSettings(settingTablesService.getInsuranceSumByProgramNameAndPeriod(
+                        zdcRequest.getProgram(),
+                        zdcRequest.getPeriod()))
+                .premiumFromSettings(settingTablesService.getPremiumByProgramNameAndPeriod(
+                        zdcRequest.getProgram(),
+                        zdcRequest.getPeriod()))
                 .accessiblePaymentMethodFromSettings(settingTablesService.getAccessiblePaymentMethod())
                 .accessiblePeriodFromSettings(settingTablesService.getAccessiblePeriodDays())
                 .accessibleProgramFromSettings(settingTablesService.getAccessibleProgram());

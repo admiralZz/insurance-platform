@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.product.dms;
+package ru.virtusystems.domain.generators;
 
 import lombok.RequiredArgsConstructor;
 import ru.virtusystems.domain.model.CalcCounter;
@@ -9,14 +9,15 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @RequiredArgsConstructor
-public class DmsCalcIdGenerator {
+public class StandardCalcIdGenerator implements CalcGenerator {
 
+    // TODO Убрать в другое место
     private final CalcCounterRepository repository;
 
+    @Override
     public String generateCalcId(Product product) {
         LocalDate today = LocalDate.now();
 
-        // читаем строку с блокировкой
         CalcCounter counter = repository.findByDayAndProductId(today, product.getId())
                 .orElseGet(() -> {
                     CalcCounter newCounter = new CalcCounter();

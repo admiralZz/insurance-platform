@@ -4,7 +4,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.virtusystems.calculator.ExcelAccessibleTypesCollector;
 import ru.virtusystems.calculator.ExcelTariffEvaluator;
-import ru.virtusystems.domain.port.ClientService;
+import ru.virtusystems.domain.contract.StandardContractService;
+import ru.virtusystems.domain.generators.StandardCalcIdGenerator;
+import ru.virtusystems.domain.generators.StandardContractNumberGenerator;
+import ru.virtusystems.domain.client.ClientService;
 import ru.virtusystems.domain.product.ProductService;
 import ru.virtusystems.domain.product.dms.*;
 import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
@@ -21,8 +24,8 @@ public class DmsProductConfiguration {
             "/home/andrey/packages/insurance-platform/calculator/src/test/resources",
             "DMS_pri_DTP_ver1_rev25.xls");
 
-    @Bean(DmsContractService.PRODUCT_NAME)
-    public DmsContractService contractService(ClientService clientService,
+    @Bean(DmsProductFacade.PRODUCT_NAME)
+    public DmsProductFacade contractService(ClientService clientService,
                                               ProductService productService,
                                               ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
                                               CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
@@ -33,11 +36,12 @@ public class DmsProductConfiguration {
         var settingTablesService = new DmsSettingTablesService();
         var calcValidateService = new DmsCalcValidateService(accessibleTypesCollector);
         var calculationService = new DmsCalculationService(tariffEvaluator, datesService, settingTablesService, calcValidateService);
-        var calcIdGenerator = new DmsCalcIdGenerator(calcCounterRepositoryJpaAdapter);
-        var contractNumberGenerator = new DmsContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
+        var calcIdGenerator = new StandardCalcIdGenerator(calcCounterRepositoryJpaAdapter);
+        var contractNumberGenerator = new StandardContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
         var requestMapper = new DmsCalculateRequestMapper();
 
-        return new DmsContractService(
+        var standardContractService = new StandardContractService(
+                DmsProductFacade.PRODUCT_NAME,
                 calculationService,
                 clientService,
                 productService,
@@ -47,5 +51,7 @@ public class DmsProductConfiguration {
                 requestMapper,
                 contractRepositoryJpaAdapter
         );
+
+        return new DmsProductFacade(productService, standardContractService, accessibleTypesCollector);
     }
 }

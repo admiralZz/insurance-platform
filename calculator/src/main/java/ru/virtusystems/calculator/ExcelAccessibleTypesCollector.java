@@ -2,8 +2,9 @@ package ru.virtusystems.calculator;
 
 // TODO доделать класс чтобы брал из реальной таблицы ОДЗ
 
-import ru.virtusystems.domain.port.AccessibleTypesCollector;
+import lombok.Getter;
 import ru.virtusystems.domain.model.types.ContractParameter;
+import ru.virtusystems.domain.port.AccessibleTypesCollector;
 
 import java.util.Map;
 import java.util.Optional;
@@ -60,6 +61,7 @@ public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
             "6 лет", "06",
             "7 лет", "07");
 
+    @Getter
     private final Map<String, Map<String, String>> accessibleTypes = Map.of(
             "dogovor.programma", programs,
             "dogovor.programm", programm,
@@ -81,6 +83,11 @@ public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
     public Map<String, String> getAccessibleTypesByCode(String code) {
         return Optional.ofNullable(accessibleTypes.get(code))
                 .orElseThrow(() -> new RuntimeException("Не найдены ОДЗ для параметра с кодом '" + code + "'"));
+    }
+
+    @Override
+    public Map<String, Map<String, String>> getAccessibleTypesMap() {
+        return accessibleTypes;
     }
 
 }

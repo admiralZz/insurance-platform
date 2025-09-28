@@ -25,7 +25,6 @@ logging:
     org.springframework: INFO
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
-    com.admiral.onlineshop: DEBUG
     liquibase: INFO
 #    org.hibernate.SQL: DEBUG
 #    org.hibernate.type.descriptor.sql.BasicBinder: TRACE

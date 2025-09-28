@@ -4,10 +4,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.virtusystems.calculator.ExcelAccessibleTypesCollector;
 import ru.virtusystems.calculator.ExcelTariffEvaluator;
-import ru.virtusystems.domain.port.ClientService;
+import ru.virtusystems.domain.contract.StandardContractService;
+import ru.virtusystems.domain.generators.StandardCalcIdGenerator;
+import ru.virtusystems.domain.generators.StandardContractNumberGenerator;
+import ru.virtusystems.domain.client.ClientService;
 import ru.virtusystems.domain.product.ProductService;
-import ru.virtusystems.domain.product.dms.*;
-import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
 import ru.virtusystems.domain.product.zachitadohoda20.*;
 import ru.virtusystems.domain.product.zachitadohoda20.mapper.ZachitaDohoda20CalculateRequestMapper;
 import ru.virtusystems.platform.database.repository.adapter.CalcCounterRepositoryJpaAdapter;
@@ -19,14 +20,12 @@ import java.nio.file.Path;
 @Configuration
 public class ZachitaDohoda20ProductConfiguration {
 
-    private static final String PRODUCT_NAME = "Защита дохода 2.0";
-
     private final Path pathToTariffEvaluator = Path.of(
             "/home/andrey/packages/insurance-platform/calculator/src/test/resources",
             "Zasita_dohoda_2.0_ver1_rev61.xls");
 
-    @Bean(PRODUCT_NAME)
-    public ZachitaDohoda20ContractService contractService(ClientService clientService,
+    @Bean(ZachitaDohoda20ProductFacade.PRODUCT_NAME)
+    public ZachitaDohoda20ProductFacade contractService(ClientService clientService,
                                                           ProductService productService,
                                                           ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
                                                           CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
@@ -37,11 +36,12 @@ public class ZachitaDohoda20ProductConfiguration {
         var settingTablesService = new ZachitaDohoda20SettingTablesService();
         var calcValidateService = new ZachitaDohoda20CalcValidateService(accessibleTypesCollector);
         var calculationService = new ZachitaDohoda20CalculationService(tariffEvaluator, datesService, settingTablesService, calcValidateService);
-        var calcIdGenerator = new ZachitaDohoda20CalcIdGenerator(calcCounterRepositoryJpaAdapter);
-        var contractNumberGenerator = new ZachitaDohoda20ContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
+        var calcIdGenerator = new StandardCalcIdGenerator(calcCounterRepositoryJpaAdapter);
+        var contractNumberGenerator = new StandardContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
         var requestMapper = new ZachitaDohoda20CalculateRequestMapper();
 
-        return new ZachitaDohoda20ContractService(
+        var standardContractService = new StandardContractService(
+                ZachitaDohoda20ProductFacade.PRODUCT_NAME,
                 calculationService,
                 clientService,
                 productService,
@@ -51,5 +51,7 @@ public class ZachitaDohoda20ProductConfiguration {
                 requestMapper,
                 contractRepositoryJpaAdapter
         );
+
+        return new ZachitaDohoda20ProductFacade(productService, standardContractService, accessibleTypesCollector);
     }
 }

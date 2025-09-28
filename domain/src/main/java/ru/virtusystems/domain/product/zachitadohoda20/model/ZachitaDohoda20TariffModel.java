@@ -2,6 +2,7 @@ package ru.virtusystems.domain.product.zachitadohoda20.model;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
+import ru.virtusystems.domain.contract.BaseTariffModel;
 import ru.virtusystems.domain.model.evaluator.TariffModel;
 import ru.virtusystems.domain.model.types.ContractParameter;
 import ru.virtusystems.domain.utils.AmountUtil;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @Getter
 @SuperBuilder
-public class ZachitaDohoda20TariffModel extends TariffModel {
+public class ZachitaDohoda20TariffModel extends BaseTariffModel {
 
     // Константы для входных параметров
     public static final String IN_PARAM_PROGRAM = "dogovor.programm";

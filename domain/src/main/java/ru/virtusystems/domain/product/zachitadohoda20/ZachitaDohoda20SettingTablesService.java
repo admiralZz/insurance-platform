@@ -1,7 +1,7 @@
 package ru.virtusystems.domain.product.zachitadohoda20;
 
 
-import ru.virtusystems.domain.port.SettingTablesService;
+import ru.virtusystems.domain.setting.SettingTablesService;
 
 import java.math.BigDecimal;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.port;
+package ru.virtusystems.domain.setting;
 
 public interface SettingTablesService {
 }

@@ -4,12 +4,13 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.domain.product.ContractService;
+import ru.virtusystems.domain.contract.ContractService;
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
 import ru.virtusystems.domain.io.UpdateRequest;
 import ru.virtusystems.domain.model.Contract;
+import ru.virtusystems.domain.product.ProductFacade;
 import ru.virtusystems.platform.api.request.*;
 import ru.virtusystems.platform.api.response.ContractResponse;
 import ru.virtusystems.platform.mapper.ContractMapper;
@@ -22,14 +23,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StandardProductDispatcherService implements ProductDispatcher {
 
-    private final Map<String, ContractService> productServices;
+    private final Map<String, ProductFacade> productServices;
     private final ContractMapper contractMapper;
     private final InsuredMapper insuredMapper;
 
     @PostConstruct
     @Transactional
     public void init() {
-        // TODO перенести в отдельный запускатор продуктов
+        // TODO перенести в отдельный коллектор продуктов
         productServices.forEach((name, service) -> service.create());
     }
 
@@ -105,14 +106,21 @@ public class StandardProductDispatcherService implements ProductDispatcher {
                 .build();
     }
 
+    // TODO вынести в отдельный коллектор продуктов
     private ContractService getService(ProductRequest productRequest) {
         String productName = Optional.ofNullable(productRequest.getProduct())
                 .orElseThrow(() -> new IllegalArgumentException("Не указан продукт"));
 
-        ContractService service = productServices.get(productName);
-        if (service == null) {
+        ProductFacade productFacade = productServices.get(productName);
+        if (productFacade == null) {
             throw new IllegalArgumentException("Unknown product: " + productName);
         }
-        return service;
+        ContractService contractService = productFacade.getContractService();
+        if (contractService == null) {
+            throw new IllegalArgumentException("Сервис оформления договоров для продукта '"
+                    + productName + "' не определен");
+        }
+
+        return contractService;
     }
 }

@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @Value
 @Builder
-public class InsuredRequiredParams {
+public class InsuredRequiredParamsDto {
     @NotBlank
     String firstName;
     @NotBlank
