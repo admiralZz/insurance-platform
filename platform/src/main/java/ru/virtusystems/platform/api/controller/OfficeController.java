@@ -5,9 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.virtusystems.platform.dto.ReadAccessibleTypesDto;
 import ru.virtusystems.platform.dto.ReadContractDto;
-import ru.virtusystems.platform.dto.ReadProductDto;
-import ru.virtusystems.platform.service.office.OfficeContractService;
-import ru.virtusystems.platform.service.office.OfficeProductService;
+import ru.virtusystems.platform.service.office.OfficeDispatcher;
 
 import java.util.List;
 
@@ -16,22 +14,22 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/contract")
 @RequiredArgsConstructor
-public class ContractController {
+public class OfficeController {
 
-    private final OfficeContractService officeContractService;
+    private final OfficeDispatcher officeDispatcher;
 
     @GetMapping
     public ResponseEntity<List<ReadContractDto>> getContracts() {
-        return ResponseEntity.ok(officeContractService.getAllContracts());
+        return ResponseEntity.ok(officeDispatcher.getAllContracts());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReadContractDto> getContracts(@PathVariable Long id) {
-        return ResponseEntity.ok(officeContractService.getContractById(id));
+        return ResponseEntity.ok(officeDispatcher.getContractById(id));
     }
 
     @GetMapping("/types/{id}")
     public ResponseEntity<ReadAccessibleTypesDto> getAccessibleTypes(@PathVariable Long id) {
-        return ResponseEntity.ok(officeContractService.getAccessibleTypesById(id));
+        return ResponseEntity.ok(officeDispatcher.getAccessibleTypesById(id));
     }
 }

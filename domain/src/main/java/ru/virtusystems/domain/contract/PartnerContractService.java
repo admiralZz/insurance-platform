@@ -6,7 +6,7 @@ import ru.virtusystems.domain.io.SaveRequest;
 import ru.virtusystems.domain.io.UpdateRequest;
 import ru.virtusystems.domain.model.Contract;
 
-public interface ContractService {
+public interface PartnerContractService {
     // TODO Убрать это отсюда
     Contract calculate(CalculateRequest calculateRequest);
     Contract save(SaveRequest saveRequest);

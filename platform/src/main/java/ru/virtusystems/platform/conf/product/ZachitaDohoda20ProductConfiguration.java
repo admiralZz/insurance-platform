@@ -4,7 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.virtusystems.calculator.ExcelAccessibleTypesCollector;
 import ru.virtusystems.calculator.ExcelTariffEvaluator;
-import ru.virtusystems.domain.contract.StandardContractService;
+import ru.virtusystems.domain.contract.StandardPartnerContractService;
+import ru.virtusystems.domain.contract.StandardOfficeContractService;
 import ru.virtusystems.domain.generators.StandardCalcIdGenerator;
 import ru.virtusystems.domain.generators.StandardContractNumberGenerator;
 import ru.virtusystems.domain.client.ClientService;
@@ -30,7 +31,7 @@ public class ZachitaDohoda20ProductConfiguration {
                                                           ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
                                                           CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
                                                           ContractNumberCounterRepositoryJpaAdapter contractNumberCounterRepositoryJpaAdapter) {
-        var accessibleTypesCollector = new ExcelAccessibleTypesCollector();
+        var accessibleTypesCollector = new ExcelAccessibleTypesCollector(pathToTariffEvaluator);
         var tariffEvaluator = new ExcelTariffEvaluator(pathToTariffEvaluator, accessibleTypesCollector);
         var datesService = new ZachitaDohoda20ContractDatesService();
         var settingTablesService = new ZachitaDohoda20SettingTablesService();
@@ -40,7 +41,7 @@ public class ZachitaDohoda20ProductConfiguration {
         var contractNumberGenerator = new StandardContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
         var requestMapper = new ZachitaDohoda20CalculateRequestMapper();
 
-        var standardContractService = new StandardContractService(
+        var standardContractService = new StandardPartnerContractService(
                 ZachitaDohoda20ProductFacade.PRODUCT_NAME,
                 calculationService,
                 clientService,
@@ -51,7 +52,8 @@ public class ZachitaDohoda20ProductConfiguration {
                 requestMapper,
                 contractRepositoryJpaAdapter
         );
+        var officeContractService = new StandardOfficeContractService(accessibleTypesCollector);
 
-        return new ZachitaDohoda20ProductFacade(productService, standardContractService, accessibleTypesCollector);
+        return new ZachitaDohoda20ProductFacade(productService, standardContractService, officeContractService);
     }
 }

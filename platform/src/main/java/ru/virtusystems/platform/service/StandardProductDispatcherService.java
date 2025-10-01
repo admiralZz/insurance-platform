@@ -4,7 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.domain.contract.ContractService;
+import ru.virtusystems.domain.contract.PartnerContractService;
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
@@ -37,9 +37,9 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Override
     @Transactional
     public ContractResponse calculate(ProductCalculateRequest calculateRequest) {
-        ContractService contractService = getService(calculateRequest);
+        PartnerContractService partnerContractService = getService(calculateRequest);
 
-        Contract contract = contractService
+        Contract contract = partnerContractService
                 .calculate(CalculateRequest.builder()
                         .calc(calculateRequest.getCalc())
                         .build());
@@ -52,14 +52,14 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Override
     @Transactional
     public ContractResponse save(ProductSaveRequest saveRequest) {
-        ContractService contractService = getService(saveRequest);
+        PartnerContractService partnerContractService = getService(saveRequest);
 
         CalculateRequest calculateRequest = Optional.ofNullable(saveRequest.getCalc())
                 .map(calc -> CalculateRequest.builder()
                         .calc(calc)
                         .build())
                 .orElse(null);
-        Contract contract = contractService.save(SaveRequest.builder()
+        Contract contract = partnerContractService.save(SaveRequest.builder()
                 .calcRequest(calculateRequest)
                 .insured(insuredMapper.toDomain(saveRequest.getInsured()))
                 .build());
@@ -73,14 +73,14 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Override
     @Transactional
     public ContractResponse update(ProductUpdateRequest updateRequest) {
-        ContractService contractService = getService(updateRequest);
+        PartnerContractService partnerContractService = getService(updateRequest);
 
         CalculateRequest calculateRequest = Optional.ofNullable(updateRequest.getCalc())
                 .map(calc -> CalculateRequest.builder()
                         .calc(calc)
                         .build())
                 .orElse(null);
-        Contract contract = contractService.update(UpdateRequest.builder()
+        Contract contract = partnerContractService.update(UpdateRequest.builder()
                 .policyId(updateRequest.getPolicyId())
                 .calcRequest(calculateRequest)
                 .insured(insuredMapper.toDomain(updateRequest.getInsured()))
@@ -94,12 +94,12 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Override
     @Transactional
     public ContractResponse issue(ProductIssueRequest productIssueRequest) {
-        ContractService contractService = getService(productIssueRequest);
+        PartnerContractService partnerContractService = getService(productIssueRequest);
 
         IssueRequest issueRequest = IssueRequest.builder()
                 .policyId(productIssueRequest.getPolicyId())
                 .build();
-        Contract contract = contractService.issue(issueRequest);
+        Contract contract = partnerContractService.issue(issueRequest);
 
         return ContractResponse.builder()
                 .contract(contractMapper.toDto(contract))
@@ -107,7 +107,7 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     }
 
     // TODO вынести в отдельный коллектор продуктов
-    private ContractService getService(ProductRequest productRequest) {
+    private PartnerContractService getService(ProductRequest productRequest) {
         String productName = Optional.ofNullable(productRequest.getProduct())
                 .orElseThrow(() -> new IllegalArgumentException("Не указан продукт"));
 
@@ -115,12 +115,12 @@ public class StandardProductDispatcherService implements ProductDispatcher {
         if (productFacade == null) {
             throw new IllegalArgumentException("Unknown product: " + productName);
         }
-        ContractService contractService = productFacade.getContractService();
-        if (contractService == null) {
+        PartnerContractService partnerContractService = productFacade.getPartnerContractService();
+        if (partnerContractService == null) {
             throw new IllegalArgumentException("Сервис оформления договоров для продукта '"
                     + productName + "' не определен");
         }
 
-        return contractService;
+        return partnerContractService;
     }
 }

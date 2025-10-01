@@ -21,7 +21,7 @@ import ru.virtusystems.domain.validation.ValidatedRequest;
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
-public class StandardContractService implements ContractService {
+public class StandardPartnerContractService implements PartnerContractService {
 
     private final String productName;
     private final CalculationService calculationService;

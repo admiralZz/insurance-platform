@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class OfficeContractService {
+public class OfficeDispatcher {
     private final ContractEntityRepository contractEntityRepository;
     private final ContractMapper contractMapper;
     private final Map<String, ProductFacade> productServices;
@@ -42,7 +42,7 @@ public class OfficeContractService {
                 .orElseThrow(() -> new IllegalArgumentException("Договор id = " + contractId + " не найден"));
         ProductFacade productFacade = getProductFacade(contractEntity);
         return ReadAccessibleTypesDto.builder()
-                .accessibleTypes(productFacade.getAccessibleTypesCollector().getAccessibleTypesMap()
+                .accessibleTypes(productFacade.getOfficeContractService().getAccessibleTypesMap()
                         .entrySet()
                         .stream()
                         .map(entry -> AccessibleTypeDto.builder()

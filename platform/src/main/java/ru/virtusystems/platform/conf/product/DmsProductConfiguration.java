@@ -2,12 +2,13 @@ package ru.virtusystems.platform.conf.product;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.virtusystems.calculator.ExcelAccessibleTypesCollector;
 import ru.virtusystems.calculator.ExcelTariffEvaluator;
-import ru.virtusystems.domain.contract.StandardContractService;
+import ru.virtusystems.calculator.SimpleMapAccessibleTypesCollector;
+import ru.virtusystems.domain.client.ClientService;
+import ru.virtusystems.domain.contract.StandardPartnerContractService;
+import ru.virtusystems.domain.contract.StandardOfficeContractService;
 import ru.virtusystems.domain.generators.StandardCalcIdGenerator;
 import ru.virtusystems.domain.generators.StandardContractNumberGenerator;
-import ru.virtusystems.domain.client.ClientService;
 import ru.virtusystems.domain.product.ProductService;
 import ru.virtusystems.domain.product.dms.*;
 import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
@@ -30,7 +31,7 @@ public class DmsProductConfiguration {
                                               ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
                                               CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
                                               ContractNumberCounterRepositoryJpaAdapter contractNumberCounterRepositoryJpaAdapter) {
-        var accessibleTypesCollector = new ExcelAccessibleTypesCollector();
+        var accessibleTypesCollector = new SimpleMapAccessibleTypesCollector();
         var tariffEvaluator = new ExcelTariffEvaluator(pathToTariffEvaluator, accessibleTypesCollector);
         var datesService = new DmsContractDatesService();
         var settingTablesService = new DmsSettingTablesService();
@@ -40,7 +41,7 @@ public class DmsProductConfiguration {
         var contractNumberGenerator = new StandardContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
         var requestMapper = new DmsCalculateRequestMapper();
 
-        var standardContractService = new StandardContractService(
+        var standardContractService = new StandardPartnerContractService(
                 DmsProductFacade.PRODUCT_NAME,
                 calculationService,
                 clientService,
@@ -51,7 +52,8 @@ public class DmsProductConfiguration {
                 requestMapper,
                 contractRepositoryJpaAdapter
         );
+        var officeContractService = new StandardOfficeContractService(accessibleTypesCollector);
 
-        return new DmsProductFacade(productService, standardContractService, accessibleTypesCollector);
+        return new DmsProductFacade(productService, standardContractService, officeContractService);
     }
 }
