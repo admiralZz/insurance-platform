@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.product;
+package ru.virtusystems.domain.port.product;
 
 import ru.virtusystems.domain.model.Product;
 

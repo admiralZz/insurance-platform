@@ -1,7 +1,9 @@
 package ru.virtusystems.domain.product.dms;
 
 
-import ru.virtusystems.domain.setting.SettingTablesService;
+import ru.virtusystems.domain.model.evaluator.TariffModel;
+import ru.virtusystems.domain.port.setting.SettingTablesService;
+import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -39,5 +41,11 @@ public class DmsSettingTablesService implements SettingTablesService {
             return insurancePremium.get(programName);
         }
         throw new RuntimeException("Премия по программе '" + programName + "' не найдена");
+    }
+
+    @Override
+    public TariffModel getDefaultSettingsTables() {
+        return DmsTariffModel.builder()
+                .build();
     }
 }

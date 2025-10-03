@@ -2,21 +2,21 @@ package ru.virtusystems.domain.product.zachitadohoda20;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import ru.virtusystems.domain.calculation.CalculationService;
-import ru.virtusystems.domain.contract.BaseTariffModel;
-import ru.virtusystems.domain.dates.ContractDatesService;
+import ru.virtusystems.domain.model.evaluator.BaseTariffModel;
 import ru.virtusystems.domain.model.evaluator.TariffEvaluationState;
-import ru.virtusystems.domain.port.TariffEvaluator;
+import ru.virtusystems.domain.port.TariffDescriptor;
+import ru.virtusystems.domain.port.calculation.CalculationService;
+import ru.virtusystems.domain.port.dates.ContractDatesService;
+import ru.virtusystems.domain.port.validation.ValidatedRequest;
 import ru.virtusystems.domain.product.zachitadohoda20.io.ZachitaDohoda20CalculateRequest;
 import ru.virtusystems.domain.product.zachitadohoda20.io.ZachitaDohoda20CalculateResponse;
 import ru.virtusystems.domain.product.zachitadohoda20.model.ZachitaDohoda20TariffModel;
-import ru.virtusystems.domain.validation.ValidatedRequest;
 
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 public class ZachitaDohoda20CalculationService implements CalculationService {
-    private final TariffEvaluator tariffEvaluator;
+    private final TariffDescriptor tariffDescriptor;
     private final ContractDatesService contractDatesService;
     private final ZachitaDohoda20SettingTablesService settingTablesService;
     private final ZachitaDohoda20CalcValidateService dmsCalcValidateService;
@@ -54,7 +54,7 @@ public class ZachitaDohoda20CalculationService implements CalculationService {
                 .accessibleProgramFromSettings(settingTablesService.getAccessibleProgram());
         ZachitaDohoda20TariffModel inputState = tariffModelBuilder
                 .build();
-        TariffEvaluationState result = tariffEvaluator.evaluateState(TariffEvaluationState.builder()
+        TariffEvaluationState result = tariffDescriptor.evaluateState(TariffEvaluationState.builder()
                 .parameters(inputState.buildParametersState())
                 .build());
 

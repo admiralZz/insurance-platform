@@ -35,5 +35,5 @@ public abstract class TariffModel {
                 .build());
     }
 
-
+    public abstract List<ContractParameter> buildParametersState();
 }

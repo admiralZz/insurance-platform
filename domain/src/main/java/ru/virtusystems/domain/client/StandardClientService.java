@@ -5,6 +5,7 @@ import org.mapstruct.factory.Mappers;
 import ru.virtusystems.domain.mapper.InsuredMapper;
 import ru.virtusystems.domain.model.Insured;
 import ru.virtusystems.domain.model.InsuredRequiredParams;
+import ru.virtusystems.domain.port.client.ClientService;
 import ru.virtusystems.domain.port.repository.InsuredRepository;
 
 import java.util.Optional;

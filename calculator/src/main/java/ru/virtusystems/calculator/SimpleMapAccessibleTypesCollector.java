@@ -3,11 +3,11 @@ package ru.virtusystems.calculator;
 // TODO доделать класс чтобы брал из реальной таблицы ОДЗ
 
 import lombok.Getter;
-import ru.virtusystems.domain.model.types.ContractParameter;
-import ru.virtusystems.domain.port.AccessibleTypesCollector;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Workbook;
+import ru.virtusystems.calculator.port.AccessibleTypesCollector;
 
 import java.util.Map;
-import java.util.Optional;
 
 public class SimpleMapAccessibleTypesCollector implements AccessibleTypesCollector {
     // TODO удалить после доработки
@@ -70,21 +70,17 @@ public class SimpleMapAccessibleTypesCollector implements AccessibleTypesCollect
 
 
     @Override
-    public String getAccessibleType(ContractParameter contractParameter) {
-        return Optional.ofNullable(accessibleTypes.get(contractParameter.getCode()))
-                .map(map -> map.get((String) contractParameter.getInValue()))
-                .orElse(null);
+    public Map<String, String> getAccessibleTypesByCode(Workbook workbook, String code) {
+        return Map.of();
     }
 
     @Override
-    public Map<String, String> getAccessibleTypesByCode(String code) {
-        return Optional.ofNullable(accessibleTypes.get(code))
-                .orElseThrow(() -> new RuntimeException("Не найдены ОДЗ для параметра с кодом '" + code + "'"));
+    public Map<String, Map<String, String>> getAccessibleTypes(Workbook workbook, FormulaEvaluator evaluator) {
+        return Map.of();
     }
 
     @Override
-    public Map<String, Map<String, String>> getAccessibleTypesMap() {
-        return accessibleTypes;
+    public Map<String, Map<String, String>> getAllTypes(Workbook workbook) {
+        return Map.of();
     }
-
 }

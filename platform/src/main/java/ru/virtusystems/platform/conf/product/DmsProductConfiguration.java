@@ -2,14 +2,15 @@ package ru.virtusystems.platform.conf.product;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import ru.virtusystems.calculator.ExcelTariffDescriptor;
 import ru.virtusystems.calculator.ExcelTariffEvaluator;
 import ru.virtusystems.calculator.SimpleMapAccessibleTypesCollector;
-import ru.virtusystems.domain.client.ClientService;
+import ru.virtusystems.domain.port.client.ClientService;
 import ru.virtusystems.domain.contract.StandardPartnerContractService;
 import ru.virtusystems.domain.contract.StandardOfficeContractService;
-import ru.virtusystems.domain.generators.StandardCalcIdGenerator;
-import ru.virtusystems.domain.generators.StandardContractNumberGenerator;
-import ru.virtusystems.domain.product.ProductService;
+import ru.virtusystems.domain.generator.StandardCalcIdGenerator;
+import ru.virtusystems.domain.generator.StandardContractNumberGenerator;
+import ru.virtusystems.domain.port.product.ProductService;
 import ru.virtusystems.domain.product.dms.*;
 import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
 import ru.virtusystems.platform.database.repository.adapter.CalcCounterRepositoryJpaAdapter;
@@ -21,7 +22,7 @@ import java.nio.file.Path;
 @Configuration
 public class DmsProductConfiguration {
 
-    private final Path pathToTariffEvaluator = Path.of(
+    private final Path pathToTariffDescriptor = Path.of(
             "/home/andrey/packages/insurance-platform/calculator/src/test/resources",
             "DMS_pri_DTP_ver1_rev25.xls");
 
@@ -31,12 +32,11 @@ public class DmsProductConfiguration {
                                               ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
                                               CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
                                               ContractNumberCounterRepositoryJpaAdapter contractNumberCounterRepositoryJpaAdapter) {
-        var accessibleTypesCollector = new SimpleMapAccessibleTypesCollector();
-        var tariffEvaluator = new ExcelTariffEvaluator(pathToTariffEvaluator, accessibleTypesCollector);
+        var tariffDescriptor = new ExcelTariffDescriptor(pathToTariffDescriptor);
         var datesService = new DmsContractDatesService();
         var settingTablesService = new DmsSettingTablesService();
-        var calcValidateService = new DmsCalcValidateService(accessibleTypesCollector);
-        var calculationService = new DmsCalculationService(tariffEvaluator, datesService, settingTablesService, calcValidateService);
+        var calcValidateService = new DmsCalcValidateService(tariffDescriptor);
+        var calculationService = new DmsCalculationService(tariffDescriptor, datesService, settingTablesService, calcValidateService);
         var calcIdGenerator = new StandardCalcIdGenerator(calcCounterRepositoryJpaAdapter);
         var contractNumberGenerator = new StandardContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
         var requestMapper = new DmsCalculateRequestMapper();
@@ -52,7 +52,7 @@ public class DmsProductConfiguration {
                 requestMapper,
                 contractRepositoryJpaAdapter
         );
-        var officeContractService = new StandardOfficeContractService(accessibleTypesCollector);
+        var officeContractService = new StandardOfficeContractService(tariffDescriptor, settingTablesService);
 
         return new DmsProductFacade(productService, standardContractService, officeContractService);
     }

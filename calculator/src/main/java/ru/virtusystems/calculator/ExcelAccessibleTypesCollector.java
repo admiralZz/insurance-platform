@@ -1,18 +1,9 @@
 package ru.virtusystems.calculator;
 
-// TODO доделать класс чтобы брал из реальной таблицы ОДЗ
-
 import lombok.RequiredArgsConstructor;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import ru.virtusystems.domain.model.types.ContractParameter;
-import ru.virtusystems.domain.port.AccessibleTypesCollector;
+import ru.virtusystems.calculator.port.AccessibleTypesCollector;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -30,48 +21,91 @@ public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
     private static final int HEADER_ROW = 18;
     private static final int START_PARAMS_ROW = HEADER_ROW + 4;
 
-    private final Path pathToExcelFile;
-
     @Override
-    public String getAccessibleType(ContractParameter contractParameter) {
-        return Optional.ofNullable(getAccessibleTypes().get(contractParameter.getCode()))
-                .map(map -> map.get((String) contractParameter.getInValue()))
-                .orElse(null);
-    }
-
-    @Override
-    public Map<String, String> getAccessibleTypesByCode(String code) {
-        return Optional.ofNullable(getAccessibleTypes().get(code))
+    public Map<String, String> getAccessibleTypesByCode(Workbook workbook, String code) {
+        return Optional.ofNullable(getAllTypes(workbook).get(code))
                 .orElseThrow(() -> new RuntimeException("Не найдены ОДЗ для параметра с кодом '" + code + "'"));
     }
 
     @Override
-    public Map<String, Map<String, String>> getAccessibleTypesMap() {
-        return getAccessibleTypes();
+    public Map<String, Map<String, String>> getAccessibleTypes(Workbook workbook, FormulaEvaluator formulaEvaluator) {
+        return getAccessibleTypesFromWorkbook(workbook, formulaEvaluator);
     }
 
-    private Map<String, Map<String, String>> getAccessibleTypes() {
-        try (Workbook templateWb = getTemplate()) {
-
-            Sheet sheet = templateWb.getSheet(MAIN_LIST_NAME);
-            if (sheet == null) {
-                throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
-            }
-            FormulaEvaluator evaluator = templateWb.getCreationHelper().createFormulaEvaluator();
-
-            return readAccessibleTypes(sheet, evaluator)
-                    .collect(Collectors.toMap(AccessibleType::getCode, v -> v.getAccessibleTypeValues().stream()
-                            .filter(AccessibleType.AccessibleTypeValue::isAccessible)
-                            .collect(Collectors.toMap(
-                                    AccessibleType.AccessibleTypeValue::getCode,
-                                    AccessibleType.AccessibleTypeValue::getName))));
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    private Map<String, Map<String, String>> getAccessibleTypesFromWorkbook(Workbook workbook, FormulaEvaluator evaluator) {
+        Sheet sheet = workbook.getSheet(MAIN_LIST_NAME);
+        if (sheet == null) {
+            throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
         }
+
+        return evaluateAndReadAccessibleTypes(sheet, evaluator)
+                .collect(Collectors.toMap(AccessibleType::getCode, v -> v.getAccessibleTypeValues().stream()
+                        .filter(AccessibleType.AccessibleTypeValue::isAccessible)
+                        .collect(Collectors.toMap(
+                                AccessibleType.AccessibleTypeValue::getCode,
+                                AccessibleType.AccessibleTypeValue::getName))));
     }
 
-    private Stream<AccessibleType> readAccessibleTypes(Sheet sheet, FormulaEvaluator evaluator) {
+    @Override
+    public Map<String, Map<String, String>> getAllTypes(Workbook workbook) {
+        Sheet sheet = workbook.getSheet(MAIN_LIST_NAME);
+        if (sheet == null) {
+            throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
+        }
+
+        return readAllTypes(sheet)
+                .collect(Collectors.toMap(AccessibleType::getCode, v -> v.getAccessibleTypeValues().stream()
+                        .collect(Collectors.toMap(
+                                AccessibleType.AccessibleTypeValue::getName,
+                                AccessibleType.AccessibleTypeValue::getCode))));
+    }
+
+    private Stream<AccessibleType> readAllTypes(Sheet sheet) {
+        Map<String, Integer> headerColumnsMap = getHeaderColumnsMap(sheet);
+        return readParameterRows(sheet)
+                .map(row -> {
+                    String name = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_NAME)));
+                    String fullCode = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_CODE)));
+                    if ((name == null || name.isBlank()) && (fullCode == null || fullCode.isBlank())) {
+                        return null;
+                    }
+
+                    String type = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_TYPE)));
+                    if (type == null || type.isBlank()) {
+                        return null;
+                    }
+                    AccessibleType.AccessibleTypeBuilder accessibleTypeBuilder = AccessibleType.builder()
+                            .code(fullCode)
+                            .name(name);
+                    Set<AccessibleType.AccessibleTypeValue> accessibleTypeValueSet = new HashSet<>();
+                    for (int i = row.getRowNum() + 1; i <= sheet.getLastRowNum(); i++) {
+                        Row valuesRow = sheet.getRow(i);
+                        if (valuesRow == null) {
+                            continue;
+                        }
+                        String valueCode = getStringCell(valuesRow.getCell(headerColumnsMap.get(COLUMN_PARAM_VALUE_CODE)));
+                        String valueName = getStringCell(valuesRow.getCell(headerColumnsMap.get(COLUMN_PARAM_VALUE_NAME)));
+                        if ((valueCode == null || valueCode.isBlank()) || (valueName == null || valueName.isBlank())) {
+                            break;
+                        }
+
+                        accessibleTypeValueSet.add(
+                                AccessibleType.AccessibleTypeValue.builder()
+                                        .code(valueCode)
+                                        .name(valueName)
+                                        .build());
+                    }
+                    if (accessibleTypeValueSet.isEmpty()) {
+                        return null;
+                    }
+                    return accessibleTypeBuilder
+                            .accessibleTypeValues(accessibleTypeValueSet)
+                            .build();
+                })
+                .filter(Objects::nonNull);
+    }
+
+    private Stream<AccessibleType> evaluateAndReadAccessibleTypes(Sheet sheet, FormulaEvaluator evaluator) {
         Map<String, Integer> headerColumnsMap = getHeaderColumnsMap(sheet);
         return readParameterRows(sheet)
                 .map(row -> {
@@ -207,22 +241,6 @@ public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
         }
 
         return false;
-    }
-
-    private Workbook getTemplate() throws IOException {
-        return getWorkbook();
-    }
-
-    private Workbook getWorkbook() throws IOException {
-        String filename = pathToExcelFile.getFileName().toString();
-        InputStream fis = Files.newInputStream(pathToExcelFile);
-        if (filename.toLowerCase().endsWith("xlsx")) {
-            return new XSSFWorkbook(fis);
-        } else if (filename.toLowerCase().endsWith("xls")) {
-            return new HSSFWorkbook(fis);
-        } else {
-            throw new IllegalArgumentException("Неподдерживаемый формат файла: " + filename);
-        }
     }
 
 }

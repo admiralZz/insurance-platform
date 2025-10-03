@@ -1,7 +1,7 @@
-package ru.virtusystems.domain.product;
+package ru.virtusystems.domain.port.product;
 
-import ru.virtusystems.domain.contract.PartnerContractService;
-import ru.virtusystems.domain.contract.OfficeContractService;
+import ru.virtusystems.domain.port.contract.PartnerContractService;
+import ru.virtusystems.domain.port.contract.OfficeContractService;
 import ru.virtusystems.domain.model.Product;
 
 public interface ProductFacade {

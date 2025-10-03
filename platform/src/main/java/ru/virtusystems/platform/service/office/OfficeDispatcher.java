@@ -3,7 +3,7 @@ package ru.virtusystems.platform.service.office;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.domain.product.ProductFacade;
+import ru.virtusystems.domain.port.product.ProductFacade;
 import ru.virtusystems.platform.database.model.ContractEntity;
 import ru.virtusystems.platform.database.model.ProductEntity;
 import ru.virtusystems.platform.database.repository.ContractEntityRepository;

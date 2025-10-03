@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.client;
+package ru.virtusystems.domain.port.client;
 
 
 import ru.virtusystems.domain.model.Insured;

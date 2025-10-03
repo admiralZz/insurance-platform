@@ -2,7 +2,7 @@ package ru.virtusystems.platform.service.office;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.virtusystems.domain.dictionary.territory.CountryService;
+import ru.virtusystems.domain.port.territory.CountryService;
 import ru.virtusystems.platform.dto.CountryDto;
 import ru.virtusystems.platform.mapper.CountryMapper;
 

@@ -1,6 +1,6 @@
 package ru.virtusystems.domain.product.dms;
 
-import ru.virtusystems.domain.dates.ContractDatesService;
+import ru.virtusystems.domain.port.dates.ContractDatesService;
 
 import java.time.LocalDateTime;
 import java.util.Map;

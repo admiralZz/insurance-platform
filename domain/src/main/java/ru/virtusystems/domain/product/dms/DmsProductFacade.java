@@ -2,11 +2,11 @@ package ru.virtusystems.domain.product.dms;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import ru.virtusystems.domain.contract.PartnerContractService;
-import ru.virtusystems.domain.contract.OfficeContractService;
+import ru.virtusystems.domain.port.contract.PartnerContractService;
+import ru.virtusystems.domain.port.contract.OfficeContractService;
 import ru.virtusystems.domain.model.Product;
-import ru.virtusystems.domain.product.ProductFacade;
-import ru.virtusystems.domain.product.ProductService;
+import ru.virtusystems.domain.port.product.ProductFacade;
+import ru.virtusystems.domain.port.product.ProductService;
 
 @Getter
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.generators;
+package ru.virtusystems.domain.port.generator;
 
 import ru.virtusystems.domain.model.Product;
 

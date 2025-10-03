@@ -2,20 +2,20 @@ package ru.virtusystems.domain.product.dms;
 
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import ru.virtusystems.domain.calculation.CalculationService;
-import ru.virtusystems.domain.contract.BaseTariffModel;
+import ru.virtusystems.domain.model.evaluator.BaseTariffModel;
 import ru.virtusystems.domain.model.evaluator.TariffEvaluationState;
-import ru.virtusystems.domain.port.TariffEvaluator;
+import ru.virtusystems.domain.port.TariffDescriptor;
+import ru.virtusystems.domain.port.calculation.CalculationService;
+import ru.virtusystems.domain.port.validation.ValidatedRequest;
 import ru.virtusystems.domain.product.dms.io.DmsCalculateRequest;
 import ru.virtusystems.domain.product.dms.io.DmsCalculateResponse;
 import ru.virtusystems.domain.product.dms.model.DmsTariffModel;
-import ru.virtusystems.domain.validation.ValidatedRequest;
 
 import java.time.LocalDateTime;
 
 @RequiredArgsConstructor
 public class DmsCalculationService implements CalculationService {
-    private final TariffEvaluator tariffEvaluator;
+    private final TariffDescriptor tariffDescriptor;
     private final DmsContractDatesService contractDatesService;
     private final DmsSettingTablesService settingTablesService;
     private final DmsCalcValidateService dmsCalcValidateService;
@@ -45,7 +45,7 @@ public class DmsCalculationService implements CalculationService {
                         dmsCalculateRequest.getProgram()));
         DmsTariffModel inputState = tariffModelBuilder
                 .build();
-        TariffEvaluationState result = tariffEvaluator.evaluateState(TariffEvaluationState.builder()
+        TariffEvaluationState result = tariffDescriptor.evaluateState(TariffEvaluationState.builder()
                 .parameters(inputState.buildParametersState())
                 .build());
 

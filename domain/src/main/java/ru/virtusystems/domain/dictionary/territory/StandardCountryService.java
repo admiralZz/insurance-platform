@@ -2,6 +2,7 @@ package ru.virtusystems.domain.dictionary.territory;
 
 import lombok.RequiredArgsConstructor;
 import ru.virtusystems.domain.model.territory.Country;
+import ru.virtusystems.domain.port.territory.CountryService;
 
 import java.util.Arrays;
 import java.util.Comparator;

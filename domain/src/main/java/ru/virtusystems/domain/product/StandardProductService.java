@@ -2,6 +2,7 @@ package ru.virtusystems.domain.product;
 
 import lombok.RequiredArgsConstructor;
 import ru.virtusystems.domain.model.Product;
+import ru.virtusystems.domain.port.product.ProductService;
 import ru.virtusystems.domain.port.repository.ProductRepository;
 
 @RequiredArgsConstructor

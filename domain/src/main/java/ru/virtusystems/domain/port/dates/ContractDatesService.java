@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.dates;
+package ru.virtusystems.domain.port.dates;
 
 import java.time.LocalDateTime;
 

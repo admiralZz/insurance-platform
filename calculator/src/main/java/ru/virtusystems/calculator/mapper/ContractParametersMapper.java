@@ -3,22 +3,23 @@ package ru.virtusystems.calculator.mapper;
 import lombok.RequiredArgsConstructor;
 import ru.virtusystems.calculator.IOParameter;
 import ru.virtusystems.domain.model.types.ContractParameter;
-import ru.virtusystems.domain.port.AccessibleTypesCollector;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class ContractParametersMapper {
 
-    private final AccessibleTypesCollector accessibleTypesCollector;
+    private final Map<String, Map<String, String>> dictionary;
 
     public List<IOParameter> mapToInputParameters(List<ContractParameter> contractParameters) {
         return contractParameters.stream()
                 .map(contractParameter -> new IOParameter(
                                 contractParameter.getName(),
                                 contractParameter.getCode(),
-                                accessibleTypesCollector.getAccessibleType(contractParameter),
+                                getDictCode(contractParameter),
                                 contractParameter.getInValue(),
                                 contractParameter.getCalcValue(),
                                 contractParameter.getFinalValue()
@@ -37,5 +38,11 @@ public class ContractParametersMapper {
                         .finalValue(ioParameter.finalValue())
                         .build())
                 .toList();
+    }
+
+    private String getDictCode(ContractParameter contractParameter) {
+        return Optional.ofNullable(dictionary.get(contractParameter.getCode()))
+                .map(map -> map.get((String) contractParameter.getInValue()))
+                .orElse(null);
     }
 }

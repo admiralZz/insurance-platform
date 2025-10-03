@@ -1,8 +1,9 @@
-package ru.virtusystems.domain.generators;
+package ru.virtusystems.domain.generator;
 
 import lombok.RequiredArgsConstructor;
 import ru.virtusystems.domain.model.ContractNumberCounter;
 import ru.virtusystems.domain.model.Product;
+import ru.virtusystems.domain.port.generator.ContractNumberGenerator;
 import ru.virtusystems.domain.port.repository.ContractNumberCounterRepository;
 
 @RequiredArgsConstructor

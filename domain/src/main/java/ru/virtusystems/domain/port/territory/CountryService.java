@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.dictionary.territory;
+package ru.virtusystems.domain.port.territory;
 
 import ru.virtusystems.domain.model.territory.Country;
 

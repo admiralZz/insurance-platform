@@ -1,7 +1,9 @@
 package ru.virtusystems.domain.product.zachitadohoda20;
 
 
-import ru.virtusystems.domain.setting.SettingTablesService;
+import ru.virtusystems.domain.model.evaluator.TariffModel;
+import ru.virtusystems.domain.port.setting.SettingTablesService;
+import ru.virtusystems.domain.product.zachitadohoda20.model.ZachitaDohoda20TariffModel;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -18,6 +20,17 @@ public class ZachitaDohoda20SettingTablesService implements SettingTablesService
 
     public ZachitaDohoda20SettingTablesService() {
         init();
+    }
+
+
+    @Override
+    public TariffModel getDefaultSettingsTables() {
+
+        return ZachitaDohoda20TariffModel.builder()
+                .accessiblePaymentMethodFromSettings(getAccessiblePaymentMethod())
+                .accessiblePeriodFromSettings(getAccessiblePeriodDays())
+                .accessibleProgramFromSettings(getAccessibleProgram())
+                .build();
     }
 
     public void init() {
@@ -94,7 +107,7 @@ public class ZachitaDohoda20SettingTablesService implements SettingTablesService
         return map.entrySet().stream()
                 .filter(Map.Entry::getValue) // оставляем только те, где value == true
                 .map(Map.Entry::getKey)      // берем ключ
-                .collect(Collectors.joining(";")); // объединяем через ";"
+                .collect(Collectors.joining(";")) + ";"; // объединяем через ";"
     }
 
     private void putSumAndPremium(String programName, String periodDaysNumeric, int sumRub, int premiumRub) {
@@ -123,4 +136,5 @@ public class ZachitaDohoda20SettingTablesService implements SettingTablesService
             throw new RuntimeException("Срок '" + normalizedPeriod + "' дней недоступен");
         }
     }
+
 }

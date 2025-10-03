@@ -1,8 +1,9 @@
-package ru.virtusystems.domain.generators;
+package ru.virtusystems.domain.generator;
 
 import lombok.RequiredArgsConstructor;
 import ru.virtusystems.domain.model.CalcCounter;
 import ru.virtusystems.domain.model.Product;
+import ru.virtusystems.domain.port.generator.CalcGenerator;
 import ru.virtusystems.domain.port.repository.CalcCounterRepository;
 
 import java.time.LocalDate;

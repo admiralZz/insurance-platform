@@ -2,7 +2,7 @@ package ru.virtusystems.domain.product.dms.model;
 
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
-import ru.virtusystems.domain.contract.BaseTariffModel;
+import ru.virtusystems.domain.model.evaluator.BaseTariffModel;
 import ru.virtusystems.domain.model.types.ContractParameter;
 import ru.virtusystems.domain.utils.AmountUtil;
 
@@ -69,6 +69,7 @@ public class DmsTariffModel extends BaseTariffModel {
     /**
      * Строит входные параметры
      */
+    @Override
     public List<ContractParameter> buildParametersState() {
 
         // Параметр программы
@@ -142,11 +143,5 @@ public class DmsTariffModel extends BaseTariffModel {
         return Optional.ofNullable(program)
                 .map(INSURANCE_RISK_PARAMETER::get)
                 .orElse(null);
-    }
-
-    private Date toDate(LocalDateTime localDateTime) {
-        return Date.from(localDateTime
-                .atZone(ZoneId.systemDefault())  // привязываем к часовому поясу
-                .toInstant());
     }
 }

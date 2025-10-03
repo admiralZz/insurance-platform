@@ -1,10 +1,11 @@
 package ru.virtusystems.domain.contract;
 
 import lombok.RequiredArgsConstructor;
-import ru.virtusystems.domain.calculation.CalculationService;
-import ru.virtusystems.domain.dates.ContractDatesService;
-import ru.virtusystems.domain.generators.CalcGenerator;
-import ru.virtusystems.domain.generators.ContractNumberGenerator;
+import ru.virtusystems.domain.model.evaluator.BaseTariffModel;
+import ru.virtusystems.domain.port.calculation.CalculationService;
+import ru.virtusystems.domain.port.dates.ContractDatesService;
+import ru.virtusystems.domain.port.generator.CalcGenerator;
+import ru.virtusystems.domain.port.generator.ContractNumberGenerator;
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
@@ -13,10 +14,11 @@ import ru.virtusystems.domain.mapper.CalculateRequestMapper;
 import ru.virtusystems.domain.model.Contract;
 import ru.virtusystems.domain.model.Product;
 import ru.virtusystems.domain.model.types.ContractStatus;
-import ru.virtusystems.domain.client.ClientService;
+import ru.virtusystems.domain.port.client.ClientService;
+import ru.virtusystems.domain.port.contract.PartnerContractService;
 import ru.virtusystems.domain.port.repository.ContractRepository;
-import ru.virtusystems.domain.product.ProductService;
-import ru.virtusystems.domain.validation.ValidatedRequest;
+import ru.virtusystems.domain.port.product.ProductService;
+import ru.virtusystems.domain.port.validation.ValidatedRequest;
 
 import java.time.LocalDateTime;
 

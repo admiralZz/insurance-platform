@@ -1,18 +1,11 @@
 package ru.virtusystems.calculator;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ru.virtusystems.calculator.mapper.ContractParametersMapper;
+import ru.virtusystems.calculator.port.TariffEvaluator;
 import ru.virtusystems.domain.model.evaluator.TariffEvaluationState;
-import ru.virtusystems.domain.port.AccessibleTypesCollector;
-import ru.virtusystems.domain.port.TariffEvaluator;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.*;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -29,18 +22,16 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
     private static final int HEADER_ROW = 9;
     private static final int START_PARAMS_ROW = HEADER_ROW + 4;
 
-    private final Path pathToExcelFile;
     private final ContractParametersMapper contractParametersMapper;
 
-    public ExcelTariffEvaluator(Path pathToExcelFile, AccessibleTypesCollector accessibleTypesCollector) {
-        this.pathToExcelFile = pathToExcelFile;
-        this.contractParametersMapper = new ContractParametersMapper(accessibleTypesCollector);
+    public ExcelTariffEvaluator(ContractParametersMapper contractParametersMapper) {
+        this.contractParametersMapper = contractParametersMapper;
     }
 
     @Override
-    public TariffEvaluationState evaluateState(TariffEvaluationState inputState) {
+    public TariffEvaluationState evaluateState(Workbook workbook, TariffEvaluationState inputState) {
         try {
-            List<IOParameter> ioParameters = evaluateAndGetIOParameters(
+            List<IOParameter> ioParameters = evaluateAndGetIOParameters(workbook,
                     contractParametersMapper.mapToInputParameters(
                             inputState.getParameters()));
             return TariffEvaluationState.builder()
@@ -51,66 +42,25 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
         }
     }
 
-    public List<ReadParameter> extractParameters() throws IOException {
-        try (Workbook templateWb = getTemplate()) {
-
-            Sheet sheet = templateWb.getSheet(MAIN_LIST_NAME);
-            if (sheet == null) {
-                throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
-            }
-
-            return readParameters(sheet).toList();
+    public List<IOParameter> evaluateAndGetIOParameters(Workbook workbook, List<IOParameter> inputParameters) throws IOException {
+        Sheet sheet = workbook.getSheet(MAIN_LIST_NAME);
+        if (sheet == null) {
+            throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
         }
+
+        inputParameters.forEach(inputParameter -> setValueByCode(sheet, inputParameter.fullCode(), inputParameter.inValue(), inputParameter.dictValue()));
+        FormulaEvaluator evaluator = workbook.getCreationHelper().createFormulaEvaluator();
+
+        return readIOParameters(sheet, evaluator);
     }
 
-    public void updateParametersAndWriteResult(List<InputParameter> inputParameters, String path) throws IOException {
-        try (Workbook templateWb = getTemplate();
-             FileOutputStream out = new FileOutputStream(path)) {
-
-            Sheet sheet = templateWb.getSheet(MAIN_LIST_NAME);
-            if (sheet == null) {
-                throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
-            }
-
-            inputParameters.forEach(inputParameter -> setValueByCode(sheet, inputParameter.fullCode(), inputParameter.value(), inputParameter.dictValue()));
-            templateWb.write(out);
+    @Override
+    public void setParams(Workbook workbook, List<IOParameter> inputParameters) {
+        Sheet sheet = workbook.getSheet(MAIN_LIST_NAME);
+        if (sheet == null) {
+            throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
         }
-    }
-
-    public List<OutputParameter> evaluateAndGetOutput(List<InputParameter> inputParameters, List<String> outputParameterCodes) throws IOException {
-        try (Workbook templateWb = getTemplate()) {
-
-            Sheet sheet = templateWb.getSheet(MAIN_LIST_NAME);
-            if (sheet == null) {
-                throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
-            }
-
-            inputParameters.forEach(inputParameter -> setValueByCode(sheet, inputParameter.fullCode(), inputParameter.value(), inputParameter.dictValue()));
-            FormulaEvaluator evaluator = templateWb.getCreationHelper().createFormulaEvaluator();
-            evaluator.evaluateAll();
-
-            return readOutputParametersByCodes(sheet, evaluator, outputParameterCodes);
-        }
-    }
-
-    public List<IOParameter> evaluateAndGetIOParameters(List<IOParameter> inputParameters) throws IOException {
-        try (Workbook templateWb = getTemplate()) {
-
-            Sheet sheet = templateWb.getSheet(MAIN_LIST_NAME);
-            if (sheet == null) {
-                throw new IllegalStateException("Не найден лист " + MAIN_LIST_NAME);
-            }
-
-            inputParameters.forEach(inputParameter -> setValueByCode(sheet, inputParameter.fullCode(), inputParameter.inValue(), inputParameter.dictValue()));
-            FormulaEvaluator evaluator = templateWb.getCreationHelper().createFormulaEvaluator();
-//            evaluator.evaluateAll();
-
-            return readIOParameters(sheet, evaluator);
-        }
-    }
-
-    private void setValueByCode(Sheet sheet, String code, String value) {
-        setValueByCode(sheet, code, value, null);
+        inputParameters.forEach(inputParameter -> setValueByCode(sheet, inputParameter.fullCode(), inputParameter.inValue(), inputParameter.dictValue()));
     }
 
     private void setValueByCode(Sheet sheet, String code, Object value, String dictValue) {
@@ -121,7 +71,9 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
         Cell cell = row.getCell(headerColumnsMap.get(COLUMN_PARAM_VALUE));
 
         String valueType = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_TYPE)));
-        setValue(cell, value, valueType);
+        if (value != null) {
+            setValue(cell, value, valueType);
+        }
         if (dictValue != null) {
             row.getCell(headerColumnsMap.get(COLUMN_PARAM_DICT_CODE)).setCellValue(dictValue);
         }
@@ -153,14 +105,6 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
                 .map(row -> row.getCell(headerColumnsMap.get(COLUMN_PARAM_CODE)))
                 .filter(cell -> Objects.equals(getStringCell(cell), code))
                 .map(Cell::getRow)
-                .findFirst();
-    }
-
-    private Optional<Cell> getCellByCode(Sheet sheet, String code) {
-        Map<String, Integer> headerColumnsMap = getHeaderColumnsMap(sheet);
-        return readParameterRows(sheet)
-                .map(row -> row.getCell(headerColumnsMap.get(COLUMN_PARAM_CODE)))
-                .filter(cell -> Objects.equals(getStringCell(cell), code))
                 .findFirst();
     }
 
@@ -227,34 +171,6 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
                 .filter(Objects::nonNull);
     }
 
-    private Stream<ReadParameter> readParameters(Sheet sheet) {
-        Map<String, Integer> headerColumnsMap = getHeaderColumnsMap(sheet);
-        return readParameterRows(sheet)
-                .map(row -> {
-                    String name = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_NAME)));
-                    String fullCode = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_CODE)));
-                    if ((name == null || name.isBlank()) && (fullCode == null || fullCode.isBlank())) {
-                        return null;
-                    }
-
-                    String valueType = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_TYPE)));
-                    if (valueType == null || valueType.isBlank()) {
-                        return null;
-                    }
-                    Object value = getValue(row.getCell(headerColumnsMap.get(COLUMN_PARAM_VALUE)), valueType);
-                    String dictValue = getStringCell(row.getCell(headerColumnsMap.get(COLUMN_PARAM_DICT_CODE)));
-
-                    return new ReadParameter(
-                            name == null ? "" : name,
-                            fullCode == null ? "" : fullCode,
-                            value == null ? "" : value,
-                            dictValue == null ? "" : dictValue
-                    );
-                })
-                .filter(Objects::nonNull);
-
-    }
-
     private Stream<Row> readParameterRows(Sheet sheet) {
         return IntStream.range(START_PARAMS_ROW, sheet.getLastRowNum())
                 .mapToObj(sheet::getRow)
@@ -314,22 +230,6 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
                 COLUMN_PARAM_OUTPUT, outputCol,
                 COLUMN_PARAM_FINAL_OUTPUT, finalOutputCol,
                 COLUMN_PARAM_TYPE, typeCol);
-    }
-
-    private Workbook getTemplate() throws IOException {
-        return getWorkbook();
-    }
-
-    private Workbook getWorkbook() throws IOException {
-        String filename = pathToExcelFile.getFileName().toString();
-        InputStream fis = Files.newInputStream(pathToExcelFile);
-        if (filename.toLowerCase().endsWith("xlsx")) {
-            return new XSSFWorkbook(fis);
-        } else if (filename.toLowerCase().endsWith("xls")) {
-            return new HSSFWorkbook(fis);
-        } else {
-            throw new IllegalArgumentException("Неподдерживаемый формат файла: " + filename);
-        }
     }
 
     private String getStringCell(Cell cell) {

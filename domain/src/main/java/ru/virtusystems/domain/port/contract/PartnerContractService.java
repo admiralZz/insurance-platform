@@ -1,4 +1,4 @@
-package ru.virtusystems.domain.contract;
+package ru.virtusystems.domain.port.contract;
 
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
