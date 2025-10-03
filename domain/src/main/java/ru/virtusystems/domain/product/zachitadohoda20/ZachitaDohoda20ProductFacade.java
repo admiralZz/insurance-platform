@@ -11,8 +11,8 @@ import ru.virtusystems.domain.port.product.ProductService;
 @Getter
 @RequiredArgsConstructor
 public class ZachitaDohoda20ProductFacade implements ProductFacade {
-    public static final String PRODUCT_NAME = "Защита дохода 2.0";
-
+    private final String name;
+    private final String description;
     private final ProductService productService;
     private final PartnerContractService partnerContractService;
     private final OfficeContractService officeContractService;
@@ -21,8 +21,8 @@ public class ZachitaDohoda20ProductFacade implements ProductFacade {
     @Override
     public Product create() {
         product = productService.getOrCreate(Product.builder()
-                .name(PRODUCT_NAME)
-                .description("Продукт мед. страхования при ДТП")
+                .name(name)
+                .description(description)
                 .build());
 
         return product;

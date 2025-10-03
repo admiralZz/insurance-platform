@@ -1,18 +1,18 @@
 package ru.virtusystems.platform.conf.product;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.virtusystems.calculator.ExcelTariffDescriptor;
-import ru.virtusystems.calculator.ExcelTariffEvaluator;
-import ru.virtusystems.calculator.SimpleMapAccessibleTypesCollector;
-import ru.virtusystems.domain.port.client.ClientService;
-import ru.virtusystems.domain.contract.StandardPartnerContractService;
 import ru.virtusystems.domain.contract.StandardOfficeContractService;
+import ru.virtusystems.domain.contract.StandardPartnerContractService;
 import ru.virtusystems.domain.generator.StandardCalcIdGenerator;
 import ru.virtusystems.domain.generator.StandardContractNumberGenerator;
+import ru.virtusystems.domain.port.client.ClientService;
 import ru.virtusystems.domain.port.product.ProductService;
 import ru.virtusystems.domain.product.dms.*;
 import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
+import ru.virtusystems.platform.conf.properties.ProductProperties;
 import ru.virtusystems.platform.database.repository.adapter.CalcCounterRepositoryJpaAdapter;
 import ru.virtusystems.platform.database.repository.adapter.ContractNumberCounterRepositoryJpaAdapter;
 import ru.virtusystems.platform.database.repository.adapter.ContractRepositoryJpaAdapter;
@@ -20,19 +20,32 @@ import ru.virtusystems.platform.database.repository.adapter.ContractRepositoryJp
 import java.nio.file.Path;
 
 @Configuration
+@ConditionalOnProperty(
+        prefix = "app.products." + ProductProperties.PRODUCT_CODE_DMS,
+        name = "enabled",
+        havingValue = "true"
+)
 public class DmsProductConfiguration {
 
-    private final Path pathToTariffDescriptor = Path.of(
-            "/home/andrey/packages/insurance-platform/calculator/src/test/resources",
-            "DMS_pri_DTP_ver1_rev25.xls");
+    private final ProductProperties.ProductConfig productConfig;
 
-    @Bean(DmsProductFacade.PRODUCT_NAME)
-    public DmsProductFacade contractService(ClientService clientService,
-                                              ProductService productService,
-                                              ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
-                                              CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
-                                              ContractNumberCounterRepositoryJpaAdapter contractNumberCounterRepositoryJpaAdapter) {
-        var tariffDescriptor = new ExcelTariffDescriptor(pathToTariffDescriptor);
+    public DmsProductConfiguration(ProductProperties productProperties) {
+        this.productConfig = productProperties.getProductConfig(ProductProperties.PRODUCT_CODE_DMS);
+    }
+
+
+    @Bean
+    public DmsProductFacade productFacade(ClientService clientService,
+                                          ProductService productService,
+                                          ContractRepositoryJpaAdapter contractRepositoryJpaAdapter,
+                                          CalcCounterRepositoryJpaAdapter calcCounterRepositoryJpaAdapter,
+                                          ContractNumberCounterRepositoryJpaAdapter contractNumberCounterRepositoryJpaAdapter) {
+
+
+        var tariffConfig = productConfig.tariff();
+        var tariffDescriptor = new ExcelTariffDescriptor(
+                Path.of(tariffConfig.path()),
+                tariffConfig.showEmptyValuesParams());
         var datesService = new DmsContractDatesService();
         var settingTablesService = new DmsSettingTablesService();
         var calcValidateService = new DmsCalcValidateService(tariffDescriptor);
@@ -42,7 +55,7 @@ public class DmsProductConfiguration {
         var requestMapper = new DmsCalculateRequestMapper();
 
         var standardContractService = new StandardPartnerContractService(
-                DmsProductFacade.PRODUCT_NAME,
+                productConfig.name(),
                 calculationService,
                 clientService,
                 productService,
@@ -54,6 +67,10 @@ public class DmsProductConfiguration {
         );
         var officeContractService = new StandardOfficeContractService(tariffDescriptor, settingTablesService);
 
-        return new DmsProductFacade(productService, standardContractService, officeContractService);
+        return new DmsProductFacade(productConfig.name(),
+                productConfig.description(),
+                productService,
+                standardContractService,
+                officeContractService);
     }
 }

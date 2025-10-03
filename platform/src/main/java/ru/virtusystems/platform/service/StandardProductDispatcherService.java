@@ -16,6 +16,7 @@ import ru.virtusystems.platform.api.response.ContractResponse;
 import ru.virtusystems.platform.mapper.ContractMapper;
 import ru.virtusystems.platform.mapper.InsuredMapper;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -23,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class StandardProductDispatcherService implements ProductDispatcher {
 
-    private final Map<String, ProductFacade> productServices;
+    private final List<ProductFacade> productServices;
     private final ContractMapper contractMapper;
     private final InsuredMapper insuredMapper;
 
@@ -31,7 +32,7 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Transactional
     public void init() {
         // TODO перенести в отдельный коллектор продуктов
-        productServices.forEach((name, service) -> service.create());
+        productServices.forEach(ProductFacade::create);
     }
 
     @Override
@@ -111,10 +112,10 @@ public class StandardProductDispatcherService implements ProductDispatcher {
         String productName = Optional.ofNullable(productRequest.getProduct())
                 .orElseThrow(() -> new IllegalArgumentException("Не указан продукт"));
 
-        ProductFacade productFacade = productServices.get(productName);
-        if (productFacade == null) {
-            throw new IllegalArgumentException("Unknown product: " + productName);
-        }
+        ProductFacade productFacade = productServices.stream()
+                .filter(facade -> facade.getName().equals(productName))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("Продукт не найден: " + productName));
         PartnerContractService partnerContractService = productFacade.getPartnerContractService();
         if (partnerContractService == null) {
             throw new IllegalArgumentException("Сервис оформления договоров для продукта '"

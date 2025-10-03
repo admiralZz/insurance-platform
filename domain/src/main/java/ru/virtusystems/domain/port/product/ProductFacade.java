@@ -5,6 +5,7 @@ import ru.virtusystems.domain.port.contract.OfficeContractService;
 import ru.virtusystems.domain.model.Product;
 
 public interface ProductFacade {
+    String getName();
     Product create();
     PartnerContractService getPartnerContractService();
     OfficeContractService getOfficeContractService();

@@ -23,9 +23,12 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
     private static final int START_PARAMS_ROW = HEADER_ROW + 4;
 
     private final ContractParametersMapper contractParametersMapper;
+    private final boolean showEmptyValueParameters;
 
-    public ExcelTariffEvaluator(ContractParametersMapper contractParametersMapper) {
+    public ExcelTariffEvaluator(ContractParametersMapper contractParametersMapper,
+                                boolean showEmptyValueParameters) {
         this.contractParametersMapper = contractParametersMapper;
+        this.showEmptyValueParameters = showEmptyValueParameters;
     }
 
     @Override
@@ -87,7 +90,26 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
 
     private List<IOParameter> readIOParameters(Sheet sheet, FormulaEvaluator evaluator) throws IOException {
         return readIOParametersStream(sheet, evaluator)
+                .filter(this::isNonEmptyValuesParameter)
                 .toList();
+    }
+
+    private boolean isNonEmptyValuesParameter(IOParameter ioParameter) {
+        if (!showEmptyValueParameters) {
+            return nonEmpty(ioParameter.inValue()) ||
+                    nonEmpty(ioParameter.calcValue()) ||
+                    nonEmpty(ioParameter.finalValue());
+        }
+        return true;
+    }
+
+    private boolean nonEmpty(Object value) {
+        if (value == null)
+            return false;
+        if (value instanceof String) {
+            return !((String) value).isEmpty();
+        }
+        return true;
     }
 
     private Object getOutputValueByCode(Sheet sheet, String code) {

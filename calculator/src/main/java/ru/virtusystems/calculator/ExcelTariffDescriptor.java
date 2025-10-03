@@ -26,14 +26,16 @@ public class ExcelTariffDescriptor implements TariffDescriptor {
     private final AccessibleTypesCollector accessibleTypesCollector;
     private final ContractParametersMapper contractParametersMapper;
     private final Map<String, Map<String, String>> dictionary;
+    private final boolean showEmptyParameters;
 
-    public ExcelTariffDescriptor(Path pathToTariffFile) {
+    public ExcelTariffDescriptor(Path pathToTariffFile, boolean showEmptyParameters) {
         this.pathToTariffFile = pathToTariffFile;
         this.file = getFile();
         this.accessibleTypesCollector = new ExcelAccessibleTypesCollector();
         this.dictionary = getDictionary();
         this.contractParametersMapper = new ContractParametersMapper(dictionary);
-        this.tariffEvaluator = new ExcelTariffEvaluator(contractParametersMapper);
+        this.showEmptyParameters = showEmptyParameters;
+        this.tariffEvaluator = new ExcelTariffEvaluator(contractParametersMapper, showEmptyParameters);
     }
 
     @Override

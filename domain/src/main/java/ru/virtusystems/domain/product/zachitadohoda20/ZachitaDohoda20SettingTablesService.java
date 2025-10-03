@@ -45,10 +45,10 @@ public class ZachitaDohoda20SettingTablesService implements SettingTablesService
         );
 
         accessiblePeriodDays = Map.of(
-                "90", true,
-                "121", true,
-                "181", true,
-                "367", true
+                "90 дней", true,
+                "121 день", true,
+                "181 день", true,
+                "367 дней", true
         );
 
         accessiblePayment = Map.of(
