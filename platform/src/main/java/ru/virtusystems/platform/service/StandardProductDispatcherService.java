@@ -1,44 +1,36 @@
 package ru.virtusystems.platform.service;
 
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import ru.virtusystems.domain.port.contract.PartnerContractService;
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
 import ru.virtusystems.domain.io.UpdateRequest;
 import ru.virtusystems.domain.model.Contract;
-import ru.virtusystems.domain.port.product.ProductFacade;
-import ru.virtusystems.platform.api.request.*;
+import ru.virtusystems.domain.port.contract.PartnerContractService;
+import ru.virtusystems.platform.api.request.ProductCalculateRequest;
+import ru.virtusystems.platform.api.request.ProductIssueRequest;
+import ru.virtusystems.platform.api.request.ProductSaveRequest;
+import ru.virtusystems.platform.api.request.ProductUpdateRequest;
 import ru.virtusystems.platform.api.response.ContractResponse;
 import ru.virtusystems.platform.mapper.ContractMapper;
 import ru.virtusystems.platform.mapper.InsuredMapper;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class StandardProductDispatcherService implements ProductDispatcher {
 
-    private final List<ProductFacade> productServices;
+    private final ProductCollector productCollector;
     private final ContractMapper contractMapper;
     private final InsuredMapper insuredMapper;
-
-    @PostConstruct
-    @Transactional
-    public void init() {
-        // TODO перенести в отдельный коллектор продуктов
-        productServices.forEach(ProductFacade::create);
-    }
 
     @Override
     @Transactional
     public ContractResponse calculate(ProductCalculateRequest calculateRequest) {
-        PartnerContractService partnerContractService = getService(calculateRequest);
+        PartnerContractService partnerContractService = productCollector.getContractService(calculateRequest);
 
         Contract contract = partnerContractService
                 .calculate(CalculateRequest.builder()
@@ -53,7 +45,7 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Override
     @Transactional
     public ContractResponse save(ProductSaveRequest saveRequest) {
-        PartnerContractService partnerContractService = getService(saveRequest);
+        PartnerContractService partnerContractService = productCollector.getContractService(saveRequest);
 
         CalculateRequest calculateRequest = Optional.ofNullable(saveRequest.getCalc())
                 .map(calc -> CalculateRequest.builder()
@@ -74,7 +66,7 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Override
     @Transactional
     public ContractResponse update(ProductUpdateRequest updateRequest) {
-        PartnerContractService partnerContractService = getService(updateRequest);
+        PartnerContractService partnerContractService = productCollector.getContractService(updateRequest);
 
         CalculateRequest calculateRequest = Optional.ofNullable(updateRequest.getCalc())
                 .map(calc -> CalculateRequest.builder()
@@ -95,7 +87,7 @@ public class StandardProductDispatcherService implements ProductDispatcher {
     @Override
     @Transactional
     public ContractResponse issue(ProductIssueRequest productIssueRequest) {
-        PartnerContractService partnerContractService = getService(productIssueRequest);
+        PartnerContractService partnerContractService = productCollector.getContractService(productIssueRequest);
 
         IssueRequest issueRequest = IssueRequest.builder()
                 .policyId(productIssueRequest.getPolicyId())
@@ -105,23 +97,5 @@ public class StandardProductDispatcherService implements ProductDispatcher {
         return ContractResponse.builder()
                 .contract(contractMapper.toDto(contract))
                 .build();
-    }
-
-    // TODO вынести в отдельный коллектор продуктов
-    private PartnerContractService getService(ProductRequest productRequest) {
-        String productName = Optional.ofNullable(productRequest.getProduct())
-                .orElseThrow(() -> new IllegalArgumentException("Не указан продукт"));
-
-        ProductFacade productFacade = productServices.stream()
-                .filter(facade -> facade.getName().equals(productName))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Продукт не найден: " + productName));
-        PartnerContractService partnerContractService = productFacade.getPartnerContractService();
-        if (partnerContractService == null) {
-            throw new IllegalArgumentException("Сервис оформления договоров для продукта '"
-                    + productName + "' не определен");
-        }
-
-        return partnerContractService;
     }
 }

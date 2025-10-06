@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.virtusystems.platform.dto.ReadAccessibleTypesDto;
 import ru.virtusystems.platform.dto.ReadContractDto;
-import ru.virtusystems.platform.service.office.OfficeDispatcher;
+import ru.virtusystems.platform.service.office.OfficeDispatcherService;
 
 import java.util.List;
 
@@ -16,20 +16,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OfficeController {
 
-    private final OfficeDispatcher officeDispatcher;
+    private final OfficeDispatcherService officeDispatcherService;
 
     @GetMapping
     public ResponseEntity<List<ReadContractDto>> getContracts() {
-        return ResponseEntity.ok(officeDispatcher.getAllContracts());
+        return ResponseEntity.ok(officeDispatcherService.getAllContracts());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReadContractDto> getContracts(@PathVariable Long id) {
-        return ResponseEntity.ok(officeDispatcher.getContractById(id));
+        return ResponseEntity.ok(officeDispatcherService.getContractById(id));
     }
 
     @GetMapping("/types/{id}")
     public ResponseEntity<ReadAccessibleTypesDto> getAccessibleTypes(@PathVariable Long id) {
-        return ResponseEntity.ok(officeDispatcher.getAccessibleTypesById(id));
+        return ResponseEntity.ok(officeDispatcherService.getAccessibleTypesById(id));
+    }
+
+    @GetMapping("/types")
+    public ResponseEntity<ReadAccessibleTypesDto> getAccessibleTypes(@RequestParam String product) {
+        return ResponseEntity.ok(officeDispatcherService.getAccessibleTypesByProduct(product));
     }
 }

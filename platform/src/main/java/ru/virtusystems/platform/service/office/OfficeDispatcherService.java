@@ -11,18 +11,18 @@ import ru.virtusystems.platform.dto.AccessibleTypeDto;
 import ru.virtusystems.platform.dto.ReadAccessibleTypesDto;
 import ru.virtusystems.platform.dto.ReadContractDto;
 import ru.virtusystems.platform.mapper.ContractMapper;
+import ru.virtusystems.platform.service.ProductCollector;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class OfficeDispatcher {
+public class OfficeDispatcherService {
     private final ContractEntityRepository contractEntityRepository;
     private final ContractMapper contractMapper;
-    private final Map<String, ProductFacade> productServices;
+    private final ProductCollector productCollector;
 
     public List<ReadContractDto> getAllContracts() {
         return contractEntityRepository.findAll()
@@ -40,7 +40,10 @@ public class OfficeDispatcher {
     public ReadAccessibleTypesDto getAccessibleTypesById(Long contractId) {
         ContractEntity contractEntity = contractEntityRepository.findById(contractId)
                 .orElseThrow(() -> new IllegalArgumentException("Договор id = " + contractId + " не найден"));
-        ProductFacade productFacade = getProductFacade(contractEntity);
+        String productName = Optional.ofNullable(contractEntity.getProduct())
+                .map(ProductEntity::getName)
+                .orElseThrow(() -> new IllegalStateException("Не удалось определить продукт договора id = " + contractId));
+        ProductFacade productFacade = productCollector.getProductFacadeByName(productName);
         return ReadAccessibleTypesDto.builder()
                 .accessibleTypes(productFacade.getOfficeContractService().getAccessibleTypesMap()
                         .entrySet()
@@ -53,14 +56,18 @@ public class OfficeDispatcher {
                 .build();
     }
 
-
-    // TODO вынести в отдельный коллектор продуктов
-    private ProductFacade getProductFacade(ContractEntity contractEntity) {
-        String productName = Optional.of(contractEntity.getProduct())
-                .map(ProductEntity::getName)
-                .orElseThrow(() -> new IllegalStateException("Не удалось определить продукт"));
-        // TODO проверка если вернет нул
-        return productServices.get(productName);
+    public ReadAccessibleTypesDto getAccessibleTypesByProduct(String productName) {
+        ProductFacade productFacade = productCollector.getProductFacadeByName(productName);
+        return ReadAccessibleTypesDto.builder()
+                .accessibleTypes(productFacade.getOfficeContractService().getAccessibleTypesMap()
+                        .entrySet()
+                        .stream()
+                        .map(entry -> AccessibleTypeDto.builder()
+                                .parameterCode(entry.getKey())
+                                .valuesAndCodesMap(entry.getValue())
+                                .build())
+                        .toList())
+                .build();
     }
 
 }

@@ -12,11 +12,11 @@ app:
         show-empty-values-params: false
     zdc:
       enabled: true
-      name: Защиты дохода 2.0
+      name: Защита дохода 2.0
       description: Продукт страхования дохода при инвестиционных рисках
       tariff:
         path: "/home/andrey/packages/insurance-platform/calculator/src/test/resources/Zasita_dohoda_2.0_ver1_rev61.xls"
-        show-empty-values-params: true
+        show-empty-values-params: false
 
 spring:
   datasource:

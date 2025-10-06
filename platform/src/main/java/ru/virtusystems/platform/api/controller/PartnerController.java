@@ -11,6 +11,8 @@ import ru.virtusystems.platform.api.request.ProductUpdateRequest;
 import ru.virtusystems.platform.api.response.ContractResponse;
 import ru.virtusystems.platform.service.ProductDispatcher;
 
+// TODO настроить корс
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/partner")
 @RequiredArgsConstructor
