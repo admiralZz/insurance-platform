@@ -32,4 +32,10 @@ public class ContractRepositoryJpaAdapter implements ContractRepository {
         return entityRepository.findByIdAndProduct(id, productMapper.toEntity(product))
                 .map(contractMapper::toDomain);
     }
+
+    @Override
+    public Optional<Contract> findByCalcIdAndProduct(String calcId, Product product) {
+        return entityRepository.findByCalcIdAndProduct(calcId, productMapper.toEntity(product))
+                .map(contractMapper::toDomain);
+    }
 }

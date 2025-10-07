@@ -8,5 +8,6 @@ import java.util.Map;
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class ProductCalculateRequest extends ProductRequest {
+    private String calcId;
     private Map<String, Object> calc;
 }

@@ -12,6 +12,7 @@ public interface ContractRepository {
     Contract save(Contract contract);
 
     Optional<Contract> findByIdAndProduct(Long id, Product product);
+    Optional<Contract> findByCalcIdAndProduct(String calcId, Product product);
 }
 
 

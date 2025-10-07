@@ -34,6 +34,7 @@ public class StandardProductDispatcherService implements ProductDispatcher {
 
         Contract contract = partnerContractService
                 .calculate(CalculateRequest.builder()
+                        .calcId(calculateRequest.getCalcId())
                         .calc(calculateRequest.getCalc())
                         .build());
 

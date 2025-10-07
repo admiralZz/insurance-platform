@@ -135,6 +135,10 @@ public class ExcelAccessibleTypesCollector implements AccessibleTypesCollector {
                             break;
                         }
 
+                        if (accessible == null) {
+                            accessible = Boolean.FALSE;
+                        }
+
                         accessibleTypeValueSet.add(
                                 AccessibleType.AccessibleTypeValue.builder()
                                         .code(valueCode)

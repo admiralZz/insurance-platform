@@ -21,6 +21,7 @@ import ru.virtusystems.domain.port.product.ProductService;
 import ru.virtusystems.domain.port.validation.ValidatedRequest;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class StandardPartnerContractService implements PartnerContractService {
@@ -41,6 +42,22 @@ public class StandardPartnerContractService implements PartnerContractService {
         BaseTariffModel newState = (BaseTariffModel)
                 calculationService.calculateTariffModel(validatedRequest);
         Product product = productService.getProductByName(productName);
+
+        Optional<Contract> maybeContract = Optional.ofNullable(calculateRequest.getCalcId())
+                .flatMap(calcId -> contractRepository.findByCalcIdAndProduct(calcId, product));
+        if (maybeContract.isPresent()) {
+            Contract contract = maybeContract.get();
+            contract.setParams(newState.getParameters());
+            contract.setPremium(newState.getTotalPremium());
+            contract.setInsuredSum(newState.getInsuranceSum());
+            contract.setCalcDate(LocalDateTime.now());
+            contract.setStartDate(contractDatesService.startDate());
+            contract.setEndDate(newState.getEndDate());
+            // TODO можно сделать StateMachine для контроля переходов между статусами
+            contract.setStatus(ContractStatus.RATE);
+
+            return contractRepository.save(contract);
+        }
 
         return contractRepository.save(Contract.builder()
                 .product(product)
