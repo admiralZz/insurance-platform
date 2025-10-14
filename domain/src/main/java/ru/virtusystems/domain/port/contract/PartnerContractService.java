@@ -10,5 +10,5 @@ public interface PartnerContractService {
     Contract calculate(CalculateRequest calculateRequest);
     Contract save(SaveRequest saveRequest);
     Contract update(UpdateRequest updateRequest);
-    Contract issue(IssueRequest issueRequest);
+    Contract issue(IssueRequest issueRequest) throws Exception;
 }

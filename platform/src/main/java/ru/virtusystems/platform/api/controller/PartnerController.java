@@ -36,7 +36,7 @@ public class PartnerController {
     }
 
     @PutMapping("issue")
-    public ResponseEntity<ContractResponse> issue(@Validated @RequestBody ProductIssueRequest productIssueRequest) {
+    public ResponseEntity<ContractResponse> issue(@Validated @RequestBody ProductIssueRequest productIssueRequest) throws Exception {
         return ResponseEntity.ok(productDispatcher.issue(productIssueRequest));
     }
 }

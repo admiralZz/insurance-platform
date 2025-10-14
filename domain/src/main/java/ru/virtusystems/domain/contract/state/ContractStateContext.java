@@ -22,6 +22,9 @@ public class ContractStateContext {
     private ContractStateContext(Contract contract) {
         this.contract = contract;
         this.state = createStateFromStatus(contract.getStatus());
+        if (contract.getStatus() == null) {
+            contract.setStatus(state.getStatus());
+        }
     }
 
     public static ContractStateContext init(Contract contract) {

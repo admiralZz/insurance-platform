@@ -87,7 +87,7 @@ public class StandardProductDispatcherService implements ProductDispatcher {
 
     @Override
     @Transactional
-    public ContractResponse issue(ProductIssueRequest productIssueRequest) {
+    public ContractResponse issue(ProductIssueRequest productIssueRequest) throws Exception {
         PartnerContractService partnerContractService = productCollector.getContractService(productIssueRequest);
 
         IssueRequest issueRequest = IssueRequest.builder()

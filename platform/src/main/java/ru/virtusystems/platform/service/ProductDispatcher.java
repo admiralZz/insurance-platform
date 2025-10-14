@@ -10,5 +10,5 @@ public interface ProductDispatcher {
     ContractResponse calculate(ProductCalculateRequest request);
     ContractResponse save(ProductSaveRequest request);
     ContractResponse update(ProductUpdateRequest request);
-    ContractResponse issue(ProductIssueRequest request);
+    ContractResponse issue(ProductIssueRequest request) throws Exception;
 }

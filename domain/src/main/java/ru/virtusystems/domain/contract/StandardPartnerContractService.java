@@ -18,6 +18,7 @@ import ru.virtusystems.domain.port.generator.CalcGenerator;
 import ru.virtusystems.domain.port.generator.ContractNumberGenerator;
 import ru.virtusystems.domain.port.product.ProductService;
 import ru.virtusystems.domain.port.repository.ContractRepository;
+import ru.virtusystems.domain.port.validation.IssueValidateService;
 import ru.virtusystems.domain.port.validation.ValidatedRequest;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,7 @@ public class StandardPartnerContractService implements PartnerContractService {
 
     private final String productName;
     private final CalculationService calculationService;
+    private final IssueValidateService issueValidateService;
     private final ClientService clientService;
     private final ProductService productService;
     private final CalcGenerator calcIdGenerator;
@@ -147,20 +149,20 @@ public class StandardPartnerContractService implements PartnerContractService {
     }
 
     @Override
-    public Contract issue(IssueRequest issueRequest) {
+    public Contract issue(IssueRequest issueRequest) throws Exception {
         Product product = productService.getProductByName(productName);
 
-        return contractRepository.findByIdAndProduct(issueRequest.getPolicyId(), product)
-                .map(contract -> {
-                    ContractStateContext.init(contract)
-                            .getState()
-                            .toIssuedState();
-
-                    return contractRepository.save(contract);
-                })
+        Contract contract = contractRepository.findByIdAndProduct(issueRequest.getPolicyId(), product)
                 .orElseThrow(() -> new RuntimeException(
                         "Contract with id=" + issueRequest.getPolicyId() + " not found"
                 ));
+
+        issueValidateService.validate(contract);
+        ContractStateContext.init(contract)
+                .getState()
+                .toIssuedState();
+
+        return contractRepository.save(contract);
 
     }
 

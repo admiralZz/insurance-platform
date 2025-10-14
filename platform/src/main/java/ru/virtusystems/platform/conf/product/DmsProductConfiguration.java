@@ -12,6 +12,7 @@ import ru.virtusystems.domain.port.client.ClientService;
 import ru.virtusystems.domain.port.product.ProductService;
 import ru.virtusystems.domain.product.dms.*;
 import ru.virtusystems.domain.product.dms.mapper.DmsCalculateRequestMapper;
+import ru.virtusystems.domain.validation.StandardIssueValidateService;
 import ru.virtusystems.platform.conf.properties.ProductProperties;
 import ru.virtusystems.platform.database.repository.adapter.CalcCounterRepositoryJpaAdapter;
 import ru.virtusystems.platform.database.repository.adapter.ContractNumberCounterRepositoryJpaAdapter;
@@ -49,6 +50,7 @@ public class DmsProductConfiguration {
         var datesService = new DmsContractDatesService();
         var settingTablesService = new DmsSettingTablesService();
         var calcValidateService = new DmsCalcValidateService(tariffDescriptor);
+        var issueValidateService = new StandardIssueValidateService();
         var calculationService = new DmsCalculationService(tariffDescriptor, datesService, settingTablesService, calcValidateService);
         var calcIdGenerator = new StandardCalcIdGenerator(calcCounterRepositoryJpaAdapter);
         var contractNumberGenerator = new StandardContractNumberGenerator(contractNumberCounterRepositoryJpaAdapter);
@@ -57,6 +59,7 @@ public class DmsProductConfiguration {
         var standardContractService = new StandardPartnerContractService(
                 productConfig.name(),
                 calculationService,
+                issueValidateService,
                 clientService,
                 productService,
                 calcIdGenerator,

@@ -12,6 +12,7 @@ import ru.virtusystems.domain.port.client.ClientService;
 import ru.virtusystems.domain.port.product.ProductService;
 import ru.virtusystems.domain.product.zachitadohoda20.*;
 import ru.virtusystems.domain.product.zachitadohoda20.mapper.ZachitaDohoda20CalculateRequestMapper;
+import ru.virtusystems.domain.validation.StandardIssueValidateService;
 import ru.virtusystems.platform.conf.properties.ProductProperties;
 import ru.virtusystems.platform.database.repository.adapter.CalcCounterRepositoryJpaAdapter;
 import ru.virtusystems.platform.database.repository.adapter.ContractNumberCounterRepositoryJpaAdapter;
@@ -45,6 +46,7 @@ public class ZachitaDohoda20ProductConfiguration {
         var datesService = new ZachitaDohoda20ContractDatesService();
         var settingTablesService = new ZachitaDohoda20SettingTablesService();
         var calcValidateService = new ZachitaDohoda20CalcValidateService(tariffDescriptor);
+        var issueValidateService = new StandardIssueValidateService();
         var calculationService = new ZachitaDohoda20CalculationService(tariffDescriptor,
                 datesService,
                 settingTablesService,
@@ -56,6 +58,7 @@ public class ZachitaDohoda20ProductConfiguration {
         var standardContractService = new StandardPartnerContractService(
                 productConfig.name(),
                 calculationService,
+                issueValidateService,
                 clientService,
                 productService,
                 calcIdGenerator,
