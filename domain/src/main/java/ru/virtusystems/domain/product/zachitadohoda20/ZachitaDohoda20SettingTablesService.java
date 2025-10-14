@@ -27,6 +27,7 @@ public class ZachitaDohoda20SettingTablesService implements SettingTablesService
     public TariffModel getDefaultSettingsTables() {
 
         return ZachitaDohoda20TariffModel.builder()
+                .citizenship("Россия")
                 .accessiblePaymentMethodFromSettings(getAccessiblePaymentMethod())
                 .accessiblePeriodFromSettings(getAccessiblePeriodDays())
                 .accessibleProgramFromSettings(getAccessibleProgram())

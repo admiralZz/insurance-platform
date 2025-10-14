@@ -1,11 +1,7 @@
 package ru.virtusystems.domain.contract;
 
 import lombok.RequiredArgsConstructor;
-import ru.virtusystems.domain.model.evaluator.BaseTariffModel;
-import ru.virtusystems.domain.port.calculation.CalculationService;
-import ru.virtusystems.domain.port.dates.ContractDatesService;
-import ru.virtusystems.domain.port.generator.CalcGenerator;
-import ru.virtusystems.domain.port.generator.ContractNumberGenerator;
+import ru.virtusystems.domain.contract.state.ContractStateContext;
 import ru.virtusystems.domain.io.CalculateRequest;
 import ru.virtusystems.domain.io.IssueRequest;
 import ru.virtusystems.domain.io.SaveRequest;
@@ -13,11 +9,15 @@ import ru.virtusystems.domain.io.UpdateRequest;
 import ru.virtusystems.domain.mapper.CalculateRequestMapper;
 import ru.virtusystems.domain.model.Contract;
 import ru.virtusystems.domain.model.Product;
-import ru.virtusystems.domain.model.types.ContractStatus;
+import ru.virtusystems.domain.model.evaluator.BaseTariffModel;
+import ru.virtusystems.domain.port.calculation.CalculationService;
 import ru.virtusystems.domain.port.client.ClientService;
 import ru.virtusystems.domain.port.contract.PartnerContractService;
-import ru.virtusystems.domain.port.repository.ContractRepository;
+import ru.virtusystems.domain.port.dates.ContractDatesService;
+import ru.virtusystems.domain.port.generator.CalcGenerator;
+import ru.virtusystems.domain.port.generator.ContractNumberGenerator;
 import ru.virtusystems.domain.port.product.ProductService;
+import ru.virtusystems.domain.port.repository.ContractRepository;
 import ru.virtusystems.domain.port.validation.ValidatedRequest;
 
 import java.time.LocalDateTime;
@@ -39,27 +39,29 @@ public class StandardPartnerContractService implements PartnerContractService {
     @Override
     public Contract calculate(CalculateRequest calculateRequest) {
         ValidatedRequest validatedRequest = calculateRequestMapper.map(calculateRequest);
-        BaseTariffModel newState = (BaseTariffModel)
-                calculationService.calculateTariffModel(validatedRequest);
         Product product = productService.getProductByName(productName);
-
         Optional<Contract> maybeContract = Optional.ofNullable(calculateRequest.getCalcId())
                 .flatMap(calcId -> contractRepository.findByCalcIdAndProduct(calcId, product));
+
         if (maybeContract.isPresent()) {
             Contract contract = maybeContract.get();
+            // Смена статуса должна происходить через данный контекст(state machine)
+            ContractStateContext.init(contract)
+                    .getState()
+                    .toRateState();
+            BaseTariffModel newState = evaluateState(validatedRequest);
+
             contract.setParams(newState.getParameters());
             contract.setPremium(newState.getTotalPremium());
             contract.setInsuredSum(newState.getInsuranceSum());
             contract.setCalcDate(LocalDateTime.now());
             contract.setStartDate(contractDatesService.startDate());
             contract.setEndDate(newState.getEndDate());
-            // TODO можно сделать StateMachine для контроля переходов между статусами
-            contract.setStatus(ContractStatus.RATE);
 
             return contractRepository.save(contract);
         }
-
-        return contractRepository.save(Contract.builder()
+        BaseTariffModel newState = evaluateState(validatedRequest);
+        Contract newContract = Contract.builder()
                 .product(product)
                 .calcId(calcIdGenerator.generateCalcId(product))
                 .params(newState.getParameters())
@@ -68,9 +70,12 @@ public class StandardPartnerContractService implements PartnerContractService {
                 .calcDate(LocalDateTime.now())
                 .startDate(contractDatesService.startDate())
                 .endDate(newState.getEndDate())
-                // TODO можно сделать StateMachine для контроля переходов между статусами
-                .status(ContractStatus.RATE)
-                .build());
+                .build();
+        ContractStateContext.init(newContract)
+                .getState()
+                .toRateState();
+
+        return contractRepository.save(newContract);
 
     }
 
@@ -80,13 +85,12 @@ public class StandardPartnerContractService implements PartnerContractService {
         BaseTariffModel newState;
         if (calculateRequest != null) {
             ValidatedRequest validatedRequest = calculateRequestMapper.map(calculateRequest);
-            newState = (BaseTariffModel) calculationService.calculateTariffModel(validatedRequest);
+            newState = evaluateState(validatedRequest);
         } else {
             newState = BaseTariffModel.builder().build();
         }
         Product product = productService.getProductByName(productName);
-
-        return contractRepository.save(Contract.builder()
+        Contract newContract = Contract.builder()
                 .product(product)
                 .calcId(calcIdGenerator.generateCalcId(productService.getProductByName(productName)))
                 .number(contractNumberGenerator.generateContractNumber(newState.getProductNumberCode(), product))
@@ -97,9 +101,12 @@ public class StandardPartnerContractService implements PartnerContractService {
                 .startDate(contractDatesService.startDate())
                 .endDate(newState.getEndDate())
                 .insured(clientService.updateOrCreateInsured(saveRequest.getInsured()))
-                // TODO можно сделать StateMachine для контроля переходов между статусами
-                .status(ContractStatus.PROJECT)
-                .build());
+                .build();
+        ContractStateContext.init(newContract)
+                .getState()
+                .toProjectState();
+
+        return contractRepository.save(newContract);
     }
 
     @Override
@@ -108,23 +115,29 @@ public class StandardPartnerContractService implements PartnerContractService {
 
         return contractRepository.findByIdAndProduct(updateRequest.getPolicyId(), product)
                 .map(contract -> {
+                    ContractStateContext.init(contract)
+                            .getState()
+                            .toProjectState();
                     CalculateRequest calculateRequest = updateRequest.getCalcRequest();
                     BaseTariffModel newState;
                     if (calculateRequest != null) {
-                        ValidatedRequest dmsCalculateRequest = calculateRequestMapper.map(calculateRequest);
-                        newState = (BaseTariffModel)
-                                calculationService.calculateTariffModel(dmsCalculateRequest);
+                        ValidatedRequest validatedRequest = calculateRequestMapper.map(calculateRequest);
+                        newState = evaluateState(validatedRequest);
                         contract.setCalcId(calcIdGenerator.generateCalcId(productService.getProductByName(productName)));
                         contract.setPremium(newState.getTotalPremium());
                         contract.setInsuredSum(newState.getInsuranceSum());
                         contract.setCalcDate(LocalDateTime.now());
                         contract.setStartDate(contractDatesService.startDate());
                         contract.setEndDate(newState.getEndDate());
+                        contract.setParams(newState.getParameters());
+
+                        // TODO надо получать кодировку не только при расчёте
+                        if (contract.getNumber() == null || contract.getNumber().isEmpty()) {
+                            contract.setNumber(contractNumberGenerator.generateContractNumber(newState.getProductNumberCode(), product));
+                        }
                     }
 
                     contract.setInsured(clientService.updateOrCreateInsured(updateRequest.getInsured()));
-                    // TODO можно сделать StateMachine для контроля переходов между статусами
-                    contract.setStatus(ContractStatus.PROJECT);
 
                     return contractRepository.save(contract);
                 })
@@ -139,8 +152,9 @@ public class StandardPartnerContractService implements PartnerContractService {
 
         return contractRepository.findByIdAndProduct(issueRequest.getPolicyId(), product)
                 .map(contract -> {
-                    // TODO проверки перед оформлением(премия != null, всякие обязательные штуки для оформления и т.д.)
-                    contract.setStatus(ContractStatus.ISSUED);
+                    ContractStateContext.init(contract)
+                            .getState()
+                            .toIssuedState();
 
                     return contractRepository.save(contract);
                 })
@@ -148,5 +162,9 @@ public class StandardPartnerContractService implements PartnerContractService {
                         "Contract with id=" + issueRequest.getPolicyId() + " not found"
                 ));
 
+    }
+
+    private BaseTariffModel evaluateState(ValidatedRequest validatedRequest) {
+        return (BaseTariffModel) calculationService.calculateTariffModel(validatedRequest);
     }
 }

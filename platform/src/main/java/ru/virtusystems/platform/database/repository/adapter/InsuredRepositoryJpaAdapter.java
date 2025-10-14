@@ -14,6 +14,7 @@ import ru.virtusystems.platform.database.repository.InsuredEntityRepository;
 import ru.virtusystems.platform.mapper.ContractMapper;
 import ru.virtusystems.platform.mapper.InsuredMapper;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -40,5 +41,12 @@ public class InsuredRepositoryJpaAdapter implements InsuredRepository {
         InsuredEntity entity = insuredMapper.toEntity(insured);
         InsuredEntity saved = insuredEntityRepository.save(entity);
         return insuredMapper.toDomain(saved);
+    }
+
+    @Override
+    public List<Insured> findAll() {
+        return insuredEntityRepository.findAll().stream()
+                .map(insuredMapper::toDomain)
+                .toList();
     }
 }

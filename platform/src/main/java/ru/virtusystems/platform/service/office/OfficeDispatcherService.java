@@ -37,6 +37,12 @@ public class OfficeDispatcherService {
                 .orElseThrow(() -> new IllegalArgumentException("Договор id = " + contractId + " не найден"));
     }
 
+    public ReadContractDto getContractByNumber(String contractNumber) {
+        return contractEntityRepository.findByNumber(contractNumber)
+                .map(contractMapper::toDto)
+                .orElseThrow(() -> new IllegalArgumentException("Договор с номером = " + contractNumber + " не найден"));
+    }
+
     public ReadAccessibleTypesDto getAccessibleTypesById(Long contractId) {
         ContractEntity contractEntity = contractEntityRepository.findById(contractId)
                 .orElseThrow(() -> new IllegalArgumentException("Договор id = " + contractId + " не найден"));

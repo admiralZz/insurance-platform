@@ -8,8 +8,6 @@ import ru.virtusystems.domain.utils.AmountUtil;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -23,6 +21,7 @@ public class ZachitaDohoda20TariffModel extends BaseTariffModel {
     public static final String IN_PARAM_END_DATE = "dogovor.dogSrokPo";
     public static final String IN_PARAM_ISSUE_DATE = "dogovor.data";
     public static final String IN_PARAM_PERCENT_TYPE = "dogovor.tipprocentov";
+    public static final String IN_PARAM_CITIZENSHIP = "dogovor.strahovatel.subekt.subektfl.fizLico.gragdanstvo.name";
 
     // Константы для рисков
     public static final String IN_PARAM_RISK = "dogovor.risknepredvidrash.strahovat";
@@ -42,6 +41,7 @@ public class ZachitaDohoda20TariffModel extends BaseTariffModel {
     // Поля состояния
     private String program;
     private String period;
+    private String citizenship;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private LocalDateTime issueDate;
@@ -98,6 +98,11 @@ public class ZachitaDohoda20TariffModel extends BaseTariffModel {
         parameters.add(ContractParameter.builder()
                 .code(IN_PARAM_PERCENT_TYPE)
                 .inValue("Без капитализации")
+                .build());
+        // Параметр какой-то процентный тип
+        parameters.add(ContractParameter.builder()
+                .code(IN_PARAM_CITIZENSHIP)
+                .inValue(citizenship)
                 .build());
 
         // Риск

@@ -37,4 +37,9 @@ public class OfficeController {
     public ResponseEntity<ReadAccessibleTypesDto> getAccessibleTypes(@RequestParam String product) {
         return ResponseEntity.ok(officeDispatcherService.getAccessibleTypesByProduct(product));
     }
+
+    @GetMapping("/number")
+    public ResponseEntity<ReadContractDto> getContractByNumber(@RequestParam String number) {
+        return ResponseEntity.ok(officeDispatcherService.getContractByNumber(number));
+    }
 }

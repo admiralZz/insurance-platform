@@ -8,12 +8,18 @@ import ru.virtusystems.domain.model.InsuredRequiredParams;
 import ru.virtusystems.domain.port.client.ClientService;
 import ru.virtusystems.domain.port.repository.InsuredRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class StandardClientService implements ClientService {
     private final InsuredRepository insuredRepository;
     private final InsuredMapper insuredMapper = Mappers.getMapper(InsuredMapper.class);
+
+    @Override
+    public List<Insured> getClientList() {
+        return insuredRepository.findAll();
+    }
 
     @Override
     public Optional<Insured> findInsuredByRequiredParams(InsuredRequiredParams insuredRequiredParams) {
