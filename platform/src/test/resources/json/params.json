@@ -1,0 +1,2187 @@
+{
+  "content": [
+    {
+      "id": 9,
+      "product": {
+        "name": "ДМС при ДТП",
+        "description": "Продукт мед. страхования при ДТП"
+      },
+      "status": "RATE",
+      "calcId": "0919_000002",
+      "calcDate": "2025-09-19T13:16:31.498935",
+      "startDate": "2025-09-20T13:16:31.498952",
+      "endDate": "2028-09-19T13:16:30.211054",
+      "premium": 63600.00,
+      "insuredSum": 1000000.00,
+      "params": [
+        {
+          "name": "Программа страхования",
+          "code": "dogovor.programma",
+          "inValue": "Премиум",
+          "calcValue": "",
+          "finalValue": "20"
+        },
+        {
+          "name": "Код договора",
+          "code": "dogovor.kodirovkaDogovora",
+          "inValue": "",
+          "calcValue": "263",
+          "finalValue": "263"
+        },
+        {
+          "name": "Напечатано заявление об отказе",
+          "code": "dogovor.otkaz",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Напечатано заявление об отказе с переносом средств",
+          "code": "dogovor.otkazSPerenosom",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Клиент",
+          "code": "dogovor.klient",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Физ. лицо",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Отчество",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.otcestvo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Фамилия",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.familia",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Имя",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.ima",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "СНИЛС",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.snils",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Пол",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.pol",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Гражданство",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.gragdanstvo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.gragdanstvo.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата рождения",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.dataRogd",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Место рождения",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.mestoRogd",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "e-mail",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.email",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Адрес фактический",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Строковое представление адреса",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.adresStr",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страна",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Улица",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.ulica",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Корпус",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.korpus",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Индекс почтовый",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.indeks",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дом",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.dom",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Район региона",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Адрес строкой",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.adresStroka",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Квартира",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.kvartira",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Населённый пункт",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Строение",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.stroenie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "ИНН",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.inn",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Телефон",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.telefon",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Участник страхового рынка",
+          "code": "dogovor.ucastnikRinka",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Партнёр СК",
+          "code": "dogovor.ucastnikRinka.partner",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Юр. лицо",
+          "code": "dogovor.ucastnikRinka.partner.subekt.subekt.subektul.urLico",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "БИК",
+          "code": "dogovor.ucastnikRinka.partner.subekt.subekt.subektul.urLico.bik",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страховой продукт",
+          "code": "dogovor.produktstrahovania",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Поступление планируемое1",
+          "code": "dogovor.postupleniaplan.postuplenieplan1",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Счёт1",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.scetanaoplatu.scet1",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Способ оплаты счета",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.scetanaoplatu.scet1.sposobOplatiSceta",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата поступления",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.data",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Документ клиента",
+          "code": "dogovor.dokumentKlienta",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Серия",
+          "code": "dogovor.dokumentKlienta.seria",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Номер",
+          "code": "dogovor.dokumentKlienta.nomer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код подразделения",
+          "code": "dogovor.dokumentKlienta.kodPodrazdelenia",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Кем выдан",
+          "code": "dogovor.dokumentKlienta.kemVidan",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата выдачи",
+          "code": "dogovor.dokumentKlienta.dataVidaci",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Тип документа",
+          "code": "dogovor.dokumentKlienta.tipDok",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Тип документа страхователя название",
+          "code": "dogovor.tipDokStrahNazvanie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Описание ОС",
+          "code": "dogovor.opisanieOS",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Валюта договора",
+          "code": "dogovor.valutaDogovora",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Премия прописью",
+          "code": "dogovor.premiaPropisu",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Премия итого",
+          "code": "dogovor.premiaItogo",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 63600.0
+        },
+        {
+          "name": "Номер",
+          "code": "dogovor.nomer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Срок действия с",
+          "code": "dogovor.dogSrokS",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1758363390211
+        },
+        {
+          "name": "Срок действия по",
+          "code": "dogovor.dogSrokPo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1852971390211
+        },
+        {
+          "name": "Дата",
+          "code": "dogovor.data",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1758276990211
+        },
+        {
+          "name": "Вид печати",
+          "code": "dogovor.vidPecati",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Стандарт»",
+          "code": "dogovor.dmsDTPstandart",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPstandart.strahovat",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPstandart.strahSumma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPstandart.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 0.0
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Премиум»",
+          "code": "dogovor.dmsDTPpremium",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPpremium.strahovat",
+          "inValue": true,
+          "calcValue": "",
+          "finalValue": true
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPpremium.strahSumma",
+          "inValue": 1000000.0,
+          "calcValue": "",
+          "finalValue": 1000000.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPpremium.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 63600.0
+        },
+        {
+          "name": "Страховая сумма из НТ",
+          "code": "dogovor.strahSummaNT",
+          "inValue": 1000000.0,
+          "calcValue": "",
+          "finalValue": 1000000.0
+        },
+        {
+          "name": "Страховая премия из НТ",
+          "code": "dogovor.strahPremiaNT",
+          "inValue": 21200.0,
+          "calcValue": "",
+          "finalValue": 21200.0
+        },
+        {
+          "name": "Срок страхования в годах",
+          "code": "dogovor.SrokStrahGod",
+          "inValue": "3 года",
+          "calcValue": "",
+          "finalValue": "03"
+        },
+        {
+          "name": "Доступный срок страхования",
+          "code": "dogovor.accessSrokStrah",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Срок страхования число лет",
+          "code": "dogovor.SrokStrahChislo",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 3.0
+        },
+        {
+          "name": "Сервис Дорожное событие",
+          "code": "dogovor.dorojnoeSobitie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Лайт»",
+          "code": "dogovor.dmsDTPlait",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPlait.strahovat",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPlait.strahSumma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPlait.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 0.0
+        },
+        {
+          "name": "Доступные программы страхования",
+          "code": "dogovor.accessProgramma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Количество полисов",
+          "code": "dogovor.kolvoPolisov",
+          "inValue": "",
+          "calcValue": 1.0,
+          "finalValue": 1.0
+        },
+        {
+          "name": "Признак трехсторонней схемы",
+          "code": "dogovor.thirdShema",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Агент по трехсторонней схеме",
+          "code": "dogovor.thirdShemaAgent",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ИНН агента по трехсторонней схеме",
+          "code": "dogovor.thirdShemaAgentInn",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дилер по трехсторонней схеме",
+          "code": "dogovor.thirdShemaDealer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Ставка КВ Агенту/Дилеру по трехсторонней схеме",
+          "code": "dogovor.thirdShemaKv",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Дата заявления в ДС на аннулирование",
+          "code": "dogovor.dataZayavlDSannul",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Тип ПФ",
+          "code": "dogovor.tipPF",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "QR код",
+          "code": "dogovor.QRCode",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ID агента",
+          "code": "dogovor.agentID",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ID участника страхового рынка",
+          "code": "dogovor.idUcastnikStrahRinok",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "product": {
+        "name": "ДМС при ДТП",
+        "description": "Продукт мед. страхования при ДТП"
+      },
+      "status": "RATE",
+      "calcId": "0919_000003",
+      "calcDate": "2025-09-19T13:17:49.405612",
+      "startDate": "2025-09-20T13:17:49.405626",
+      "endDate": "2028-09-19T13:17:48.198847",
+      "premium": 63600.00,
+      "insuredSum": 1000000.00,
+      "params": [
+        {
+          "name": "Программа страхования",
+          "code": "dogovor.programma",
+          "inValue": "Премиум",
+          "calcValue": "",
+          "finalValue": "20"
+        },
+        {
+          "name": "Код договора",
+          "code": "dogovor.kodirovkaDogovora",
+          "inValue": "",
+          "calcValue": "263",
+          "finalValue": "263"
+        },
+        {
+          "name": "Напечатано заявление об отказе",
+          "code": "dogovor.otkaz",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Напечатано заявление об отказе с переносом средств",
+          "code": "dogovor.otkazSPerenosom",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Клиент",
+          "code": "dogovor.klient",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Физ. лицо",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Отчество",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.otcestvo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Фамилия",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.familia",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Имя",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.ima",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "СНИЛС",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.snils",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Пол",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.pol",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Гражданство",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.gragdanstvo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.gragdanstvo.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата рождения",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.dataRogd",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Место рождения",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.mestoRogd",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "e-mail",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.email",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Адрес фактический",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Строковое представление адреса",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.adresStr",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страна",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Улица",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.ulica",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Корпус",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.korpus",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Индекс почтовый",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.indeks",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дом",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.dom",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Район региона",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Адрес строкой",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.adresStroka",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Квартира",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.kvartira",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Населённый пункт",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Строение",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.stroenie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "ИНН",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.inn",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Телефон",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.telefon",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Участник страхового рынка",
+          "code": "dogovor.ucastnikRinka",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Партнёр СК",
+          "code": "dogovor.ucastnikRinka.partner",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Юр. лицо",
+          "code": "dogovor.ucastnikRinka.partner.subekt.subekt.subektul.urLico",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "БИК",
+          "code": "dogovor.ucastnikRinka.partner.subekt.subekt.subektul.urLico.bik",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страховой продукт",
+          "code": "dogovor.produktstrahovania",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Поступление планируемое1",
+          "code": "dogovor.postupleniaplan.postuplenieplan1",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Счёт1",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.scetanaoplatu.scet1",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Способ оплаты счета",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.scetanaoplatu.scet1.sposobOplatiSceta",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата поступления",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.data",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Документ клиента",
+          "code": "dogovor.dokumentKlienta",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Серия",
+          "code": "dogovor.dokumentKlienta.seria",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Номер",
+          "code": "dogovor.dokumentKlienta.nomer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код подразделения",
+          "code": "dogovor.dokumentKlienta.kodPodrazdelenia",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Кем выдан",
+          "code": "dogovor.dokumentKlienta.kemVidan",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата выдачи",
+          "code": "dogovor.dokumentKlienta.dataVidaci",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Тип документа",
+          "code": "dogovor.dokumentKlienta.tipDok",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Тип документа страхователя название",
+          "code": "dogovor.tipDokStrahNazvanie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Описание ОС",
+          "code": "dogovor.opisanieOS",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Валюта договора",
+          "code": "dogovor.valutaDogovora",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Премия прописью",
+          "code": "dogovor.premiaPropisu",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Премия итого",
+          "code": "dogovor.premiaItogo",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 63600.0
+        },
+        {
+          "name": "Номер",
+          "code": "dogovor.nomer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Срок действия с",
+          "code": "dogovor.dogSrokS",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1758363468198
+        },
+        {
+          "name": "Срок действия по",
+          "code": "dogovor.dogSrokPo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1852971468198
+        },
+        {
+          "name": "Дата",
+          "code": "dogovor.data",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1758277068198
+        },
+        {
+          "name": "Вид печати",
+          "code": "dogovor.vidPecati",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Стандарт»",
+          "code": "dogovor.dmsDTPstandart",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPstandart.strahovat",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPstandart.strahSumma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPstandart.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 0.0
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Премиум»",
+          "code": "dogovor.dmsDTPpremium",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPpremium.strahovat",
+          "inValue": true,
+          "calcValue": "",
+          "finalValue": true
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPpremium.strahSumma",
+          "inValue": 1000000.0,
+          "calcValue": "",
+          "finalValue": 1000000.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPpremium.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 63600.0
+        },
+        {
+          "name": "Страховая сумма из НТ",
+          "code": "dogovor.strahSummaNT",
+          "inValue": 1000000.0,
+          "calcValue": "",
+          "finalValue": 1000000.0
+        },
+        {
+          "name": "Страховая премия из НТ",
+          "code": "dogovor.strahPremiaNT",
+          "inValue": 21200.0,
+          "calcValue": "",
+          "finalValue": 21200.0
+        },
+        {
+          "name": "Срок страхования в годах",
+          "code": "dogovor.SrokStrahGod",
+          "inValue": "3 года",
+          "calcValue": "",
+          "finalValue": "03"
+        },
+        {
+          "name": "Доступный срок страхования",
+          "code": "dogovor.accessSrokStrah",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Срок страхования число лет",
+          "code": "dogovor.SrokStrahChislo",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 3.0
+        },
+        {
+          "name": "Сервис Дорожное событие",
+          "code": "dogovor.dorojnoeSobitie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Лайт»",
+          "code": "dogovor.dmsDTPlait",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPlait.strahovat",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPlait.strahSumma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPlait.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 0.0
+        },
+        {
+          "name": "Доступные программы страхования",
+          "code": "dogovor.accessProgramma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Количество полисов",
+          "code": "dogovor.kolvoPolisov",
+          "inValue": "",
+          "calcValue": 1.0,
+          "finalValue": 1.0
+        },
+        {
+          "name": "Признак трехсторонней схемы",
+          "code": "dogovor.thirdShema",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Агент по трехсторонней схеме",
+          "code": "dogovor.thirdShemaAgent",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ИНН агента по трехсторонней схеме",
+          "code": "dogovor.thirdShemaAgentInn",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дилер по трехсторонней схеме",
+          "code": "dogovor.thirdShemaDealer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Ставка КВ Агенту/Дилеру по трехсторонней схеме",
+          "code": "dogovor.thirdShemaKv",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Дата заявления в ДС на аннулирование",
+          "code": "dogovor.dataZayavlDSannul",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Тип ПФ",
+          "code": "dogovor.tipPF",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "QR код",
+          "code": "dogovor.QRCode",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ID агента",
+          "code": "dogovor.agentID",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ID участника страхового рынка",
+          "code": "dogovor.idUcastnikStrahRinok",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "product": {
+        "name": "ДМС при ДТП",
+        "description": "Продукт мед. страхования при ДТП"
+      },
+      "insured": {
+        "id": 1,
+        "lastName": "Пупкин",
+        "firstName": "Василий",
+        "birthDate": "2001-08-30",
+        "citizenship": "Россия",
+        "gender": "MALE"
+      },
+      "status": "PROJECT",
+      "calcId": "0919_000004",
+      "number": "2630000001",
+      "calcDate": "2025-09-19T13:39:12.155452",
+      "startDate": "2025-09-20T13:39:12.155475",
+      "endDate": "2027-09-19T13:39:06.940625",
+      "premium": 42400.00,
+      "insuredSum": 1000000.00,
+      "params": [
+        {
+          "name": "Программа страхования",
+          "code": "dogovor.programma",
+          "inValue": "Премиум",
+          "calcValue": "",
+          "finalValue": "20"
+        },
+        {
+          "name": "Код договора",
+          "code": "dogovor.kodirovkaDogovora",
+          "inValue": "",
+          "calcValue": "263",
+          "finalValue": "263"
+        },
+        {
+          "name": "Напечатано заявление об отказе",
+          "code": "dogovor.otkaz",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Напечатано заявление об отказе с переносом средств",
+          "code": "dogovor.otkazSPerenosom",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Клиент",
+          "code": "dogovor.klient",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Физ. лицо",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Отчество",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.otcestvo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Фамилия",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.familia",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Имя",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.ima",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "СНИЛС",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.snils",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Пол",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.pol",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Гражданство",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.gragdanstvo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.gragdanstvo.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата рождения",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.dataRogd",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Место рождения",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.mestoRogd",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "e-mail",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.email",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Адрес фактический",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Строковое представление адреса",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.adresStr",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страна",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.strana.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Улица",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.ulica",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Корпус",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.korpus",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Индекс почтовый",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.indeks",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дом",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.dom",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Район региона",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.raionRegiona.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Адрес строкой",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.adresStroka",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Квартира",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.kvartira",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Населённый пункт",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Регион",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.region.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Название",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.name",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код КЛАДР",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.nasPunkt.kodKLADR",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Строение",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.adresFakt.stroenie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "ИНН",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.inn",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Телефон",
+          "code": "dogovor.klient.klient.subekt.subektfl.fizLico.telefon",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Участник страхового рынка",
+          "code": "dogovor.ucastnikRinka",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Партнёр СК",
+          "code": "dogovor.ucastnikRinka.partner",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Юр. лицо",
+          "code": "dogovor.ucastnikRinka.partner.subekt.subekt.subektul.urLico",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "БИК",
+          "code": "dogovor.ucastnikRinka.partner.subekt.subekt.subektul.urLico.bik",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страховой продукт",
+          "code": "dogovor.produktstrahovania",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Поступление планируемое1",
+          "code": "dogovor.postupleniaplan.postuplenieplan1",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Счёт1",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.scetanaoplatu.scet1",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Способ оплаты счета",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.scetanaoplatu.scet1.sposobOplatiSceta",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата поступления",
+          "code": "dogovor.postupleniaplan.postuplenieplan1.data",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Документ клиента",
+          "code": "dogovor.dokumentKlienta",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Серия",
+          "code": "dogovor.dokumentKlienta.seria",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Номер",
+          "code": "dogovor.dokumentKlienta.nomer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Код подразделения",
+          "code": "dogovor.dokumentKlienta.kodPodrazdelenia",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Кем выдан",
+          "code": "dogovor.dokumentKlienta.kemVidan",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дата выдачи",
+          "code": "dogovor.dokumentKlienta.dataVidaci",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Тип документа",
+          "code": "dogovor.dokumentKlienta.tipDok",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Тип документа страхователя название",
+          "code": "dogovor.tipDokStrahNazvanie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Описание ОС",
+          "code": "dogovor.opisanieOS",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Валюта договора",
+          "code": "dogovor.valutaDogovora",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Премия прописью",
+          "code": "dogovor.premiaPropisu",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Премия итого",
+          "code": "dogovor.premiaItogo",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 42400.0
+        },
+        {
+          "name": "Номер",
+          "code": "dogovor.nomer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Срок действия с",
+          "code": "dogovor.dogSrokS",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1758364746941
+        },
+        {
+          "name": "Срок действия по",
+          "code": "dogovor.dogSrokPo",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1821350346940
+        },
+        {
+          "name": "Дата",
+          "code": "dogovor.data",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 1758278346941
+        },
+        {
+          "name": "Вид печати",
+          "code": "dogovor.vidPecati",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Стандарт»",
+          "code": "dogovor.dmsDTPstandart",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPstandart.strahovat",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPstandart.strahSumma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPstandart.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 0.0
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Премиум»",
+          "code": "dogovor.dmsDTPpremium",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPpremium.strahovat",
+          "inValue": true,
+          "calcValue": "",
+          "finalValue": true
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPpremium.strahSumma",
+          "inValue": 1000000.0,
+          "calcValue": "",
+          "finalValue": 1000000.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPpremium.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 42400.0
+        },
+        {
+          "name": "Страховая сумма из НТ",
+          "code": "dogovor.strahSummaNT",
+          "inValue": 1000000.0,
+          "calcValue": "",
+          "finalValue": 1000000.0
+        },
+        {
+          "name": "Страховая премия из НТ",
+          "code": "dogovor.strahPremiaNT",
+          "inValue": 21200.0,
+          "calcValue": "",
+          "finalValue": 21200.0
+        },
+        {
+          "name": "Срок страхования в годах",
+          "code": "dogovor.SrokStrahGod",
+          "inValue": "2 года",
+          "calcValue": "",
+          "finalValue": "02"
+        },
+        {
+          "name": "Доступный срок страхования",
+          "code": "dogovor.accessSrokStrah",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Срок страхования число лет",
+          "code": "dogovor.SrokStrahChislo",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 2.0
+        },
+        {
+          "name": "Сервис Дорожное событие",
+          "code": "dogovor.dorojnoeSobitie",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "ТипРиска.Обращение по программе ДМС «ДМС при ДТП. Лайт»",
+          "code": "dogovor.dmsDTPlait",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Страхуется",
+          "code": "dogovor.dmsDTPlait.strahovat",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Страховая сумма",
+          "code": "dogovor.dmsDTPlait.strahSumma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Страховая премия",
+          "code": "dogovor.dmsDTPlait.strahPremia",
+          "inValue": "",
+          "calcValue": 0.0,
+          "finalValue": 0.0
+        },
+        {
+          "name": "Доступные программы страхования",
+          "code": "dogovor.accessProgramma",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Количество полисов",
+          "code": "dogovor.kolvoPolisov",
+          "inValue": "",
+          "calcValue": 1.0,
+          "finalValue": 1.0
+        },
+        {
+          "name": "Признак трехсторонней схемы",
+          "code": "dogovor.thirdShema",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": false
+        },
+        {
+          "name": "Агент по трехсторонней схеме",
+          "code": "dogovor.thirdShemaAgent",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ИНН агента по трехсторонней схеме",
+          "code": "dogovor.thirdShemaAgentInn",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Дилер по трехсторонней схеме",
+          "code": "dogovor.thirdShemaDealer",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "Ставка КВ Агенту/Дилеру по трехсторонней схеме",
+          "code": "dogovor.thirdShemaKv",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        },
+        {
+          "name": "Дата заявления в ДС на аннулирование",
+          "code": "dogovor.dataZayavlDSannul",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": -2209086000000
+        },
+        {
+          "name": "Тип ПФ",
+          "code": "dogovor.tipPF",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "QR код",
+          "code": "dogovor.QRCode",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ID агента",
+          "code": "dogovor.agentID",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": ""
+        },
+        {
+          "name": "ID участника страхового рынка",
+          "code": "dogovor.idUcastnikStrahRinok",
+          "inValue": "",
+          "calcValue": "",
+          "finalValue": 0.0
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "page": 0,
+    "size": 3,
+    "totalElements": 75
+  }
+}

@@ -1,6 +1,7 @@
 package ru.virtusystems.platform.service.office;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.virtusystems.domain.port.product.ProductFacade;
@@ -8,6 +9,7 @@ import ru.virtusystems.platform.database.model.ContractEntity;
 import ru.virtusystems.platform.database.model.ProductEntity;
 import ru.virtusystems.platform.database.repository.ContractEntityRepository;
 import ru.virtusystems.platform.dto.AccessibleTypeDto;
+import ru.virtusystems.platform.dto.PageResponse;
 import ru.virtusystems.platform.dto.ReadAccessibleTypesDto;
 import ru.virtusystems.platform.dto.ReadContractDto;
 import ru.virtusystems.platform.mapper.ContractMapper;
@@ -31,6 +33,22 @@ public class OfficeDispatcherService {
                 .toList();
     }
 
+    public List<ReadContractDto> getAllContracts(Pageable pageable) {
+        return contractEntityRepository.findAllBy(pageable)
+                .stream()
+                .map(contractMapper::toDto)
+                .toList();
+    }
+
+    public PageResponse<ReadContractDto> getContractPageResponse(Pageable pageable) {
+        return PageResponse.of(contractEntityRepository.findAllBy(pageable)
+                .map(contractMapper::toDto));
+    }
+
+    public long countContracts() {
+        return contractEntityRepository.count();
+    }
+
     public ReadContractDto getContractById(Long contractId) {
         return contractEntityRepository.findById(contractId)
                 .map(contractMapper::toDto)
@@ -43,6 +61,8 @@ public class OfficeDispatcherService {
                 .orElseThrow(() -> new IllegalArgumentException("Договор с номером = " + contractNumber + " не найден"));
     }
 
+    // TODO надо разделить этот класс по функционалу -
+    //  отделить методы получения контрактов от перенаправления в officeContractService
     public ReadAccessibleTypesDto getAccessibleTypesById(Long contractId) {
         ContractEntity contractEntity = contractEntityRepository.findById(contractId)
                 .orElseThrow(() -> new IllegalArgumentException("Договор id = " + contractId + " не найден"));

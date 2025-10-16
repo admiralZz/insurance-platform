@@ -1,13 +1,13 @@
 package ru.virtusystems.platform.api.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ru.virtusystems.platform.dto.PageResponse;
 import ru.virtusystems.platform.dto.ReadAccessibleTypesDto;
 import ru.virtusystems.platform.dto.ReadContractDto;
 import ru.virtusystems.platform.service.office.OfficeDispatcherService;
-
-import java.util.List;
 
 // TODO настроить корс
 @CrossOrigin(origins = "http://localhost:3000")
@@ -19,12 +19,12 @@ public class OfficeController {
     private final OfficeDispatcherService officeDispatcherService;
 
     @GetMapping
-    public ResponseEntity<List<ReadContractDto>> getContracts() {
-        return ResponseEntity.ok(officeDispatcherService.getAllContracts());
+    public PageResponse<ReadContractDto> getContracts(Pageable pageable) {
+        return officeDispatcherService.getContractPageResponse(pageable);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReadContractDto> getContracts(@PathVariable Long id) {
+    public ResponseEntity<ReadContractDto> getContract(@PathVariable Long id) {
         return ResponseEntity.ok(officeDispatcherService.getContractById(id));
     }
 

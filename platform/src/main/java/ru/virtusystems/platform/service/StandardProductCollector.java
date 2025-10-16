@@ -2,8 +2,10 @@ package ru.virtusystems.platform.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.virtusystems.domain.model.Product;
 import ru.virtusystems.domain.port.contract.PartnerContractService;
 import ru.virtusystems.domain.port.product.ProductFacade;
 import ru.virtusystems.platform.api.request.ProductRequest;
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class StandardProductCollector implements ProductCollector {
     private final List<ProductFacade> productServices;
@@ -19,7 +22,12 @@ public class StandardProductCollector implements ProductCollector {
     @PostConstruct
     @Transactional
     public void init() {
-        productServices.forEach(ProductFacade::create);
+        productServices.forEach(facade -> {
+            Product product = facade.create();
+            log.info("Продукт(id = {}) '{}' создан",
+                    product.getId(),
+                    product.getName());
+        });
     }
 
     @Override
