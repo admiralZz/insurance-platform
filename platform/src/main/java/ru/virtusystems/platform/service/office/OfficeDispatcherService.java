@@ -12,6 +12,7 @@ import ru.virtusystems.platform.dto.AccessibleTypeDto;
 import ru.virtusystems.platform.dto.PageResponse;
 import ru.virtusystems.platform.dto.ReadAccessibleTypesDto;
 import ru.virtusystems.platform.dto.ReadContractDto;
+import ru.virtusystems.platform.dto.filter.ContractFilter;
 import ru.virtusystems.platform.mapper.ContractMapper;
 import ru.virtusystems.platform.service.ProductCollector;
 
@@ -40,8 +41,8 @@ public class OfficeDispatcherService {
                 .toList();
     }
 
-    public PageResponse<ReadContractDto> getContractPageResponse(Pageable pageable) {
-        return PageResponse.of(contractEntityRepository.findAllBy(pageable)
+    public PageResponse<ReadContractDto> getContractPageResponse(ContractFilter filter, Pageable pageable) {
+        return PageResponse.of(contractEntityRepository.findContractsByFilter(filter, pageable)
                 .map(contractMapper::toDto));
     }
 

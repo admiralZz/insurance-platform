@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.virtusystems.platform.dto.PageResponse;
 import ru.virtusystems.platform.dto.ReadAccessibleTypesDto;
 import ru.virtusystems.platform.dto.ReadContractDto;
+import ru.virtusystems.platform.dto.filter.ContractFilter;
 import ru.virtusystems.platform.service.office.OfficeDispatcherService;
 
 // TODO настроить корс
@@ -19,8 +20,8 @@ public class OfficeController {
     private final OfficeDispatcherService officeDispatcherService;
 
     @GetMapping
-    public PageResponse<ReadContractDto> getContracts(Pageable pageable) {
-        return officeDispatcherService.getContractPageResponse(pageable);
+    public PageResponse<ReadContractDto> getContracts(ContractFilter filter, Pageable pageable) {
+        return officeDispatcherService.getContractPageResponse(filter, pageable);
     }
 
     @GetMapping("/{id}")
