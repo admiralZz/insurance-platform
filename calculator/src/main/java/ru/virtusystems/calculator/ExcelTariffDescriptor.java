@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.Map;
 
 @Getter
@@ -27,6 +28,7 @@ public class ExcelTariffDescriptor implements TariffDescriptor {
     private final ContractParametersMapper contractParametersMapper;
     private final Map<String, Map<String, String>> dictionary;
     private final boolean showEmptyParameters;
+    private final Map<String, Map<String, String>> cacheAccessibleTypesByCode = new HashMap<>();
 
     public ExcelTariffDescriptor(Path pathToTariffFile, boolean showEmptyParameters) {
         this.pathToTariffFile = pathToTariffFile;
@@ -61,8 +63,14 @@ public class ExcelTariffDescriptor implements TariffDescriptor {
 
     @Override
     public Map<String, String> getAccessibleTypesByCode(String code) {
+        Map<String, String> cachedAccessibleType = cacheAccessibleTypesByCode.get(code);
+        if (cachedAccessibleType != null) {
+            return cachedAccessibleType;
+        }
         try (Workbook workbook = newWorkbook()) {
-            return accessibleTypesCollector.getAccessibleTypesByCode(workbook, code);
+            Map<String, String> accessibleTypesByCode = accessibleTypesCollector.getAccessibleTypesByCode(workbook, code);
+            cacheAccessibleTypesByCode.put(code, accessibleTypesByCode);
+            return accessibleTypesByCode;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
