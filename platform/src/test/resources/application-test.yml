@@ -1,3 +1,20 @@
+app:
+  products:
+    dms:
+      enabled: true
+      name: ДМС при ДТП
+      description: Продукт мед. страхования при ДТП
+      tariff:
+        path: "/home/andrey/packages/insurance-platform/calculator/src/test/resources/DMS_pri_DTP_ver1_rev25.xls"
+        show-empty-values-params: false
+    zdc:
+      enabled: true
+      name: Защита дохода 2.0
+      description: Продукт страхования дохода при инвестиционных рисках
+      tariff:
+        path: "/home/andrey/packages/insurance-platform/calculator/src/test/resources/Zasita_dohoda_2.0_ver1_rev61.xls"
+        show-empty-values-params: false
+
 spring:
   datasource:
     username: test
@@ -9,6 +26,7 @@ spring:
         format_sql: true
         hbm2ddl:
           auto: validate
+    open-in-view: false
   liquibase:
     enabled: true
     change-log: classpath:/db/changelog/db.changelog-master.yaml
@@ -18,6 +36,3 @@ logging:
     root: info
 #    org.hibernate.orm.jdbc.bind: TRACE
 #    org.springframework.jdbc.core: TRACE
-app:
-  image:
-    bucket: /home/andrey/packages/online-shop/images/products

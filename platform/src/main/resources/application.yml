@@ -17,6 +17,13 @@ app:
       tariff:
         path: "/home/andrey/packages/insurance-platform/calculator/src/test/resources/Zasita_dohoda_2.0_ver1_rev61.xls"
         show-empty-values-params: false
+  profiling:
+    enable: true
+    pointcuts:
+      - ru.virtusystems.domain.contract.StandardPartnerContractService
+      - ru.virtusystems.domain.product.zachitadohoda20.ZachitaDohoda20CalculationService
+      - ru.virtusystems.calculator.ExcelTariffDescriptor
+      - ru.virtusystems.platform.database.repository.adapter
 
 spring:
   datasource:
@@ -39,6 +46,7 @@ spring:
 
 logging:
   level:
+    ru.virtusystems.platform.conf.profiler.CustomPerformanceMonitorInterceptor: TRACE
     org.springframework: INFO
     org.springframework.security: DEBUG
     org.springframework.web: DEBUG
