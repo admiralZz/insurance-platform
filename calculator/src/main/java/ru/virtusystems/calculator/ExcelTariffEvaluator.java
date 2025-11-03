@@ -89,7 +89,7 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
     }
 
     private List<IOParameter> readIOParameters(Sheet sheet, FormulaEvaluator evaluator) throws IOException {
-        return readIOParametersStream(sheet, evaluator)
+        return readIOParametersStreamOptimized(sheet, evaluator)
                 .filter(this::isNonEmptyValuesParameter)
                 .toList();
     }
@@ -188,6 +188,56 @@ public class ExcelTariffEvaluator implements TariffEvaluator {
                             inValue == null ? "" : inValue,
                             calcValue == null ? "" : calcValue,
                             finalOutputValue == null ? "" : finalOutputValue
+                    );
+                })
+                .filter(Objects::nonNull);
+    }
+
+    private Stream<IOParameter> readIOParametersStreamOptimized(Sheet sheet, FormulaEvaluator evaluator) {
+        // 1) один раз пересчитать формулы
+//        evaluator.evaluateAll();
+        Map<String, Integer> cols = getHeaderColumnsMap(sheet);
+        return readParameterRows(sheet)
+                .map(row -> {
+                    Cell[] c = new Cell[6];
+                    c[0] = row.getCell(cols.get(COLUMN_PARAM_NAME));
+                    c[1] = row.getCell(cols.get(COLUMN_PARAM_CODE));
+                    c[2] = row.getCell(cols.get(COLUMN_PARAM_TYPE));
+                    c[3] = row.getCell(cols.get(COLUMN_PARAM_VALUE));
+                    c[4] = row.getCell(cols.get(COLUMN_PARAM_DICT_CODE));
+                    c[5] = row.getCell(cols.get(COLUMN_PARAM_OUTPUT));
+                    Cell finalOutCell = row.getCell(cols.get(COLUMN_PARAM_FINAL_OUTPUT));
+                    if (finalOutCell != null && finalOutCell.getCellType() == CellType.FORMULA) {
+                        try {
+                            evaluator.evaluateFormulaCell(finalOutCell);
+                        } catch (Exception ignore) {
+                            // просто оставляем cached value
+                        }
+                    }
+
+                    String name = getStringCell(c[0]);
+                    String fullCode = getStringCell(c[1]);
+                    if ((name == null || name.isBlank()) && (fullCode == null || fullCode.isBlank())) {
+                        return null;
+                    }
+
+                    String type = getStringCell(c[2]);
+                    if (type == null || type.isBlank()) {
+                        return null;
+                    }
+
+                    Object inValue = getValue(c[3], type);
+                    String dictVal = getStringCell(c[4]);
+                    Object calcVal = getValue(c[5], type);
+                    Object finalVal = getValue(finalOutCell, type);
+
+                    return new IOParameter(
+                            name == null ? "" : name,
+                            fullCode == null ? "" : fullCode,
+                            dictVal == null ? "" : dictVal,
+                            inValue == null ? "" : inValue,
+                            calcVal == null ? "" : calcVal,
+                            finalVal == null ? "" : finalVal
                     );
                 })
                 .filter(Objects::nonNull);
