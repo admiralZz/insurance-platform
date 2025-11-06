@@ -2,6 +2,7 @@ package ru.virtusystems.domain.model;
 
 import lombok.*;
 
+@ToString
 @Getter
 @Setter
 @Builder

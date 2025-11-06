@@ -13,6 +13,8 @@ repositories {
 apply from: "${rootDir}/versions.gradle"
 
 dependencies {
+    implementation "org.slf4j:slf4j-api:${versions.slf4j_api}"
+
     // MapStruct
     implementation "org.mapstruct:mapstruct:${versions.mapstruct}"
     annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapstruct}"

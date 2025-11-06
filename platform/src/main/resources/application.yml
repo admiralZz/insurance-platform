@@ -17,12 +17,15 @@ app:
       tariff:
         path: "/home/andrey/packages/insurance-platform/calculator/src/test/resources/Zasita_dohoda_2.0_ver1_rev61.xls"
         show-empty-values-params: false
+  tariff-client:
+    url: http://localhost:8084
   profiling:
     enable: true
     pointcuts:
       - ru.virtusystems.domain.contract.StandardPartnerContractService
       - ru.virtusystems.domain.product.zachitadohoda20.ZachitaDohoda20CalculationService
       - ru.virtusystems.calculator.ExcelTariffDescriptor
+      - ru.virtusystems.calculator.ExcelTariffEvaluator
       - ru.virtusystems.platform.database.repository.adapter
 
 spring:

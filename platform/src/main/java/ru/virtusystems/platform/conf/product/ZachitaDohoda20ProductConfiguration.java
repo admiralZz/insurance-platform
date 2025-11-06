@@ -53,7 +53,7 @@ public class ZachitaDohoda20ProductConfiguration {
     }
 
     @Bean
-    public TariffDescriptor tariffDescriptor() {
+    public ExcelTariffDescriptor tariffDescriptor() {
         var tariffConfig = productConfig.tariff();
         return new ExcelTariffDescriptor(
                 Path.of(tariffConfig.path()),
